@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.optic.fast_go.fast_go">
+
+
+   <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="fast_go"
         android:icon="@mipmap/ic_launcher">

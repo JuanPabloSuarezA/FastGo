@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "924994072715",
+    "project_id": "fast-go-fc83a",
+    "storage_bucket": "fast-go-fc83a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924994072715:android:5235b0e416843020f8e48e",
+        "android_client_info": {
+          "package_name": "com.optic.fast_go.fast_go"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924994072715-ibmqvss7aeaqqohmf4ka9dkk22of4b50.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.optic.fast_go.fast_go",
+            "certificate_hash": "3c2fd27de7987d34294ce07372617e751837e616"
+          }
+        },
+        {
+          "client_id": "924994072715-t53r2np6vru3e5na6juluitgkt26c258.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAahRMkfaAwkhMIaJlrqOonGKBKim3Fpb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924994072715-t53r2np6vru3e5na6juluitgkt26c258.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
