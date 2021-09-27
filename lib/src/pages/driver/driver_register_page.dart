@@ -1,4 +1,4 @@
-import 'package:fast_go/src/pages/login/login_controller.dart';
+import 'package:fast_go/src/pages/driver/driver_register_controller.dart';
 import 'package:fast_go/src/widgets/button_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -6,13 +6,14 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:fast_go/src/utils/colors.dart' as util;
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginPage extends StatefulWidget {
+class DriverRegisterPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _DriverRegisterPageState createState() => _DriverRegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  LoginController _loginController = new LoginController();
+class _DriverRegisterPageState extends State<DriverRegisterPage> {
+  DriverRegisterController _driverRegisterController =
+      new DriverRegisterController();
 
   @override
   void initState() {
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
 
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      _loginController.init(context);
+      _driverRegisterController.init(context);
     });
   }
 
@@ -33,28 +34,26 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               _topDecoration(),
               _labelLogIn(),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.2,
-              ),
+              _textFieldUserName(),
               _textFieldEmail(),
               _textFieldPasswd(),
-              _btnLogIn(
-                "Iniciar Sesión",
+              _textFieldConfPasswd(),
+              _btnRegister(
+                "Registrarse",
               ),
-              _labelNoRegistration()
             ],
           ),
         ));
   }
 
-  Widget _btnLogIn(String text) {
+  Widget _btnRegister(String text) {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: ButtonApp(
         text: text,
         color: util.Colors.fgcolor,
-        onPressed: _loginController.login,
+        onPressed: _driverRegisterController.register,
       ),
     );
   }
@@ -64,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: Text(
-        "Inicio de sesión",
+        "Registro de conductor",
         style: TextStyle(
             color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
       ),
@@ -73,9 +72,9 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _textFieldEmail() {
     return Container(
-        margin: EdgeInsets.symmetric(horizontal: 30),
+        margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         child: TextField(
-          controller: _loginController.emailController,
+          controller: _driverRegisterController.emailController,
           decoration: InputDecoration(
               hintText: "Correo@upb.edu.co",
               labelText: "Correo electrónico",
@@ -86,11 +85,26 @@ class _LoginPageState extends State<LoginPage> {
         ));
   }
 
+  Widget _textFieldUserName() {
+    return Container(
+        margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+        child: TextField(
+          controller: _driverRegisterController.userNameController,
+          decoration: InputDecoration(
+              hintText: "user123",
+              labelText: "Nombre de usuario",
+              suffixIcon: Icon(
+                Icons.person_outline,
+                color: util.Colors.fgcolor,
+              )),
+        ));
+  }
+
   Widget _textFieldPasswd() {
     return Container(
-        margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+        margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         child: TextField(
-          controller: _loginController.passwdController,
+          controller: _driverRegisterController.passwdController,
           obscureText: true,
           decoration: InputDecoration(
               labelText: "Contraseña",
@@ -101,17 +115,29 @@ class _LoginPageState extends State<LoginPage> {
         ));
   }
 
+  Widget _textFieldConfPasswd() {
+    return Container(
+        margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+        child: TextField(
+          controller: _driverRegisterController.confPasswdController,
+          obscureText: true,
+          decoration: InputDecoration(
+              labelText: "Confirmar contraseña",
+              suffixIcon: Icon(
+                Icons.lock,
+                color: util.Colors.fgcolor,
+              )),
+        ));
+  }
+
   Widget _labelNoRegistration() {
-    return GestureDetector(
-      onTap: _loginController.registerPage,
-      child: Center(
-          child: Container(
-        child: Text(
-          "No te has registrado?",
-          style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-        ),
-      )),
-    );
+    return Center(
+        child: Container(
+      child: Text(
+        "No te has registrado?",
+        style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+      ),
+    ));
   }
 
   Widget _topDecoration() {

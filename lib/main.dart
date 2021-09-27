@@ -1,5 +1,6 @@
+import 'package:fast_go/src/pages/driver/driver_register_page.dart';
 import 'package:fast_go/src/pages/login/login_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fast_go/src/pages/client/register/client_register_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fast_go/src/pages/home/home_page.dart';
@@ -34,6 +35,8 @@ class _MyAppState extends State<MyApp> {
       routes: {
         "home": (context) => HomePage(),
         "login": (context) => LoginPage(),
+        "client/register": (context) => ClientRegisterPage(),
+        "driver/register": (context) => DriverRegisterPage(),
       },
       theme: ThemeData(
           textTheme: GoogleFonts.nobileTextTheme(

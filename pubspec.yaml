@@ -29,8 +29,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_custom_clippers: ^2.0.0
   google_fonts: ^0.3.7
-  firebase_auth: ^0.18.4+1
-  firebase_core: ^0.5.3
+  firebase_auth: ^0.20.1
+  firebase_core: ^0.7.0
+  cloud_firestore: ^0.16.0
+  progress_dialog: ^1.2.0
+  shared_preferences: ^0.5.12+4
 
 dev_dependencies:
   flutter_test:

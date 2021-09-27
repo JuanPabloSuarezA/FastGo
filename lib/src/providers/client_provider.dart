@@ -1,0 +1,25 @@
+import 'package:fast_go/src/models/client.dart';
+
+import "package:cloud_firestore/cloud_firestore.dart";
+
+class ClientProvider {
+  CollectionReference _ref;
+
+  ClientProvider() {
+    _ref = FirebaseFirestore.instance.collection("Clients");
+  }
+
+  Future<void> create(Client client) {
+    String errorMessage;
+
+    try {
+      return _ref.doc(client.id).set(client.toJson());
+    } catch (e) {
+      errorMessage = e.code;
+    }
+
+    if (errorMessage != null) {
+      return Future.error(errorMessage);
+    }
+  }
+}

@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
                 SizedBox(
                   height: 30,
                 ),
-                _imageTypeUser("assets/img/clientela.png", context),
+                _imageTypeUser("assets/img/clientela.png", context, "client"),
                 SizedBox(
                   height: 10,
                 ),
@@ -37,7 +37,8 @@ class HomePage extends StatelessWidget {
                 SizedBox(
                   height: 30,
                 ),
-                _imageTypeUser("assets/img/conductor-de-taxi.png", context),
+                _imageTypeUser(
+                    "assets/img/conductor-de-taxi.png", context, "driver"),
                 SizedBox(
                   height: 10,
                 ),
@@ -48,9 +49,11 @@ class HomePage extends StatelessWidget {
         ));
   }
 
-  Widget _imageTypeUser(String image, BuildContext context) {
+  Widget _imageTypeUser(String image, BuildContext context, String user) {
     return GestureDetector(
-      onTap: _homeController.loginPage,
+      onTap: () {
+        _homeController.loginPage(user);
+      },
       child: CircleAvatar(
         backgroundImage: AssetImage(image),
         radius: 50,
