@@ -14,6 +14,9 @@ class MapDriverController {
     zoom: 14.0,
   );
 
+  Position _position;
+  StreamSubscription<Position> _positionStream;
+
   Future init(BuildContext context) {
     this.context = context;
   }
