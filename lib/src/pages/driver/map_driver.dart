@@ -55,6 +55,7 @@ class _MapDriverState extends State<MapDriver> {
     return Container(
       height: 50,
       alignment: Alignment.bottomCenter,
+      margin: EdgeInsets.symmetric(horizontal: 60, vertical: 30),
       child: ButtonApp(
         text: 'Conectarse',
         color: Colors.blueAccent,
