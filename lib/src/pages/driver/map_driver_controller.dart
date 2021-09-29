@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart' as location;
+import 'package:fast_go/src/utils/snackb.dart' as utils;
 
 class MapDriverController {
   BuildContext context;
@@ -30,8 +31,42 @@ class MapDriverController {
   void updateLocation ()async{
     try{
       await _determinePosition();
+      _position= await Geolocator.getLastKnownPosition();
+      CenterPosition();
+      _positionStream=Geolocator.getPositionStream(
+        desiredAccuracy: LocationAccuracy.best,
+        distanceFilter: 1
+        ).listen((Position position) { 
+          _position=position,
+          animateCameraToPosition(_position.latitude,_position.longitude);
+        });
+      
     }catch(error){
       print('Error en la localizacion: $error')
+    }
+  }
+
+  void CenterPosition(){
+    if (_position!= null){
+      animateCameraToPosition(_position.latitude,_position.longitude)
+    }
+    else{
+      utils.Snackb.showSnackb(context, "Activa el gps para obtener tu ubicaciòn")
+    }
+  }
+
+  Future animateCameraToPosition(double latitude, double longitude) async{
+    GoogleMapController controller= await _mapController.future;
+    if (controller !=null) {
+      controller.animateCamera(CameraUpdate.newCameraPosition(
+        cameraPosition(
+          bearing: 0,
+          target: LatLng(latitude, longitude),
+          zoom:17
+        )
+        ));
+      
+    } else {
     }
   }
 
