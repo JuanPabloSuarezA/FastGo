@@ -7,6 +7,7 @@ import 'package:fast_go/src/utils/snackb.dart' as utils;
 
 class MapDriverController {
   BuildContext context;
+  Function refresh;
   GlobalKey<ScaffoldState> key = new GlobalKey<ScaffoldState>();
   Completer<GoogleMapController> _mapController = Completer();
 
@@ -20,9 +21,10 @@ class MapDriverController {
   StreamSubscription<Position> _positionStream;
   BitmapDescriptor MDriver;
 
-  Future init(BuildContext context) async {
+  Future init(BuildContext context, Function refresh) async {
     this.context = context;
-    MDriver = await CTimg('assets\img\icon_car.png');
+    this.refresh = refresh;
+    MDriver = await CTimg('assets/img/icon_car.png');
     checkGPS();
   }
 
@@ -39,6 +41,7 @@ class MapDriverController {
       CenterPosition();
       marcador('driver', _position.latitude, _position.longitude,
           'tu ubicacion', '', MDriver);
+      refresh();
 
       _positionStream = Geolocator.getPositionStream(
               desiredAccuracy: LocationAccuracy.best, distanceFilter: 1)
@@ -48,6 +51,7 @@ class MapDriverController {
             'tu ubicacion', '', MDriver);
 
         animateCameraToPosition(_position.latitude, _position.longitude);
+        refresh();
       });
     } catch (error) {
       print('Error en la localizacion: $error');
