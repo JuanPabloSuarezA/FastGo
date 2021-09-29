@@ -20,6 +20,7 @@ class MapDriverController {
 
   Future init(BuildContext context) {
     this.context = context;
+    checkGPS();
   }
 
   void onMapCreaated(GoogleMapController controller) {

@@ -24,6 +24,7 @@ class _MapDriverState extends State<MapDriver> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _con.key,
       body: Stack(
         children: [
           _googleMapsWidget(),
@@ -88,8 +89,10 @@ class _MapDriverState extends State<MapDriver> {
 
   Widget _googleMapsWidget() {
     return GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition: _con.initialPosition,
-        onMapCreated: _con.onMapCreaated);
+      mapType: MapType.normal,
+      initialCameraPosition: _con.initialPosition,
+      onMapCreated: _con.onMapCreaated,
+      myLocationButtonEnabled: true,
+    );
   }
 }
