@@ -17,6 +17,7 @@ class MapDriverController {
 
   Position _position;
   StreamSubscription<Position> _positionStream;
+  BitmapDescriptor MDriver;
 
   Future init(BuildContext context) {
     this.context = context;
@@ -59,7 +60,24 @@ class MapDriverController {
     if (controller != null) {
       controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
           bearing: 0, target: LatLng(latitude, longitude), zoom: 17)));
-    } else {}
+    }
+  }
+
+  Future<BitmapDescriptor> CTimg(String path) async {
+    ImageConfiguration configuration = ImageConfiguration();
+    BitmapDescriptor bitmapDescriptor =
+        await BitmapDescriptor.fromAssetImage(configuration, path);
+    return bitmapDescriptor;
+  }
+
+  void marcador(String makerId, double lat, double lng, String title,
+      String content, BitmapDescriptor iicon) {
+    MarkerId id = MarkerId(makerId);
+    Marker marker = Marker(
+        markerId: id,
+        icon: iicon,
+        position: LatLng(lat, lng),
+        infoWindow: InfoWindow(title: title, snippet: content));
   }
 
   void checkGPS() async {
