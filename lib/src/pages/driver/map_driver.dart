@@ -48,9 +48,11 @@ class _MapDriverState extends State<MapDriver> {
     return Container(
       alignment: Alignment.centerRight,
       child: Card(
-        shape: CircleBorder(),
-        child: Icon(Icons.location_searching),
-      ),
+          shape: CircleBorder(),
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Icon(Icons.location_searching),
+          )),
     );
   }
 
