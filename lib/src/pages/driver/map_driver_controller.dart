@@ -15,6 +15,7 @@ class MapDriverController {
     zoom: 14.0,
   );
 
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   Position _position;
   StreamSubscription<Position> _positionStream;
   BitmapDescriptor MDriver;
@@ -78,6 +79,7 @@ class MapDriverController {
         icon: iicon,
         position: LatLng(lat, lng),
         infoWindow: InfoWindow(title: title, snippet: content));
+    markers[id] = marker;
   }
 
   void checkGPS() async {

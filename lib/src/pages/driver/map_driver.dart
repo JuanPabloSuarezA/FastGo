@@ -94,6 +94,7 @@ class _MapDriverState extends State<MapDriver> {
       onMapCreated: _con.onMapCreaated,
       myLocationButtonEnabled: true,
       myLocationEnabled: true,
+      markers: Set<Marker>.of(_con.markers.values),
     );
   }
 }
