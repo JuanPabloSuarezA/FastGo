@@ -31,6 +31,7 @@ class _MapDriverState extends State<MapDriver> {
             child: Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [_btnMenu(), _btnPosition()],
                 ),
                 Expanded(child: Container()),
