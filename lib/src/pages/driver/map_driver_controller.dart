@@ -37,13 +37,15 @@ class MapDriverController {
       await _determinePosition();
       _position = await Geolocator.getLastKnownPosition();
       CenterPosition();
-      marcador('driver', _position.latitude,_position.longitude, 'tu ubicacion', '', MDriver)
+      marcador('driver', _position.latitude, _position.longitude,
+          'tu ubicacion', '', MDriver);
 
       _positionStream = Geolocator.getPositionStream(
               desiredAccuracy: LocationAccuracy.best, distanceFilter: 1)
           .listen((Position position) {
         _position = position;
-         marcador('driver', _position.latitude,_position.longitude, 'tu ubicacion', '', MDriver)
+        marcador('driver', _position.latitude, _position.longitude,
+            'tu ubicacion', '', MDriver);
 
         animateCameraToPosition(_position.latitude, _position.longitude);
       });
