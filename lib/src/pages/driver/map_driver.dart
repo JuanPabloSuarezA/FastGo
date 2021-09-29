@@ -46,7 +46,6 @@ class _MapDriverState extends State<MapDriver> {
       alignment: Alignment.centerLeft,
       child: IconButton(
         onPressed: () {},
-        icon: Icon(Icons.menu, color: Colors.white),
       ),
     );
   }
