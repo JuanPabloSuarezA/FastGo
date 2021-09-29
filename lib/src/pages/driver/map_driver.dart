@@ -1,4 +1,8 @@
+import 'package:fast_go/src/pages/driver/map_driver_controller.dart';
+import 'package:fast_go/src/widgets/button_app.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapDriver extends StatefulWidget {
   @override
@@ -6,12 +10,63 @@ class MapDriver extends StatefulWidget {
 }
 
 class _MapDriverState extends State<MapDriver> {
+  MapDriverController _con = new MapDriverController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      _con.init(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text("mapa conductor"),
+      body: Stack(
+        children: [
+          _googleMapsWidget(),
+          SafeArea(
+            child: Column(
+              children: [
+                _btnMenu(),
+                Expanded(child: Container()),
+                _btnConnect()
+              ],
+            ),
+          )
+        ],
       ),
     );
+  }
+
+  Widget _btnMenu() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: IconButton(
+        onPressed: () {},
+        icon: Icon(Icons.menu, color: Colors.white),
+      ),
+    );
+  }
+
+  Widget _btnConnect() {
+    return Container(
+      height: 50,
+      alignment: Alignment.bottomCenter,
+      child: ButtonApp(
+        text: 'Conectarse',
+        color: Colors.blueAccent,
+        textColor: Colors.white,
+      ),
+    );
+  }
+
+  Widget _googleMapsWidget() {
+    return GoogleMap(
+        mapType: MapType.normal,
+        initialCameraPosition: _con.initialPosition,
+        onMapCreated: _con.onMapCreaated);
   }
 }
