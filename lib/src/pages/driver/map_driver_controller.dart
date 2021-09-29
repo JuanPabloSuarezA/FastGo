@@ -29,46 +29,37 @@ class MapDriverController {
     _mapController.complete(controller);
   }
 
-  void updateLocation ()async{
-    try{
+  void updateLocation() async {
+    try {
       await _determinePosition();
-      _position= await Geolocator.getLastKnownPosition();
+      _position = await Geolocator.getLastKnownPosition();
       CenterPosition();
-      _positionStream=Geolocator.getPositionStream(
-        desiredAccuracy: LocationAccuracy.best,
-        distanceFilter: 1
-        ).listen((Position position) { 
-          _position=position,
-          animateCameraToPosition(_position.latitude,_position.longitude);
-        });
-      
-    }catch(error){
-      print('Error en la localizacion: $error')
+      _positionStream = Geolocator.getPositionStream(
+              desiredAccuracy: LocationAccuracy.best, distanceFilter: 1)
+          .listen((Position position) {
+        _position = position;
+        animateCameraToPosition(_position.latitude, _position.longitude);
+      });
+    } catch (error) {
+      print('Error en la localizacion: $error');
     }
   }
 
-  void CenterPosition(){
-    if (_position!= null){
-      animateCameraToPosition(_position.latitude,_position.longitude)
-    }
-    else{
-      utils.Snackb.showSnackb(context, "Activa el gps para obtener tu ubicaciòn")
-    }
-  }
-
-  Future animateCameraToPosition(double latitude, double longitude) async{
-    GoogleMapController controller= await _mapController.future;
-    if (controller !=null) {
-      controller.animateCamera(CameraUpdate.newCameraPosition(
-        cameraPosition(
-          bearing: 0,
-          target: LatLng(latitude, longitude),
-          zoom:17
-        )
-        ));
-      
+  void CenterPosition() {
+    if (_position != null) {
+      animateCameraToPosition(_position.latitude, _position.longitude);
     } else {
+      utils.Snackb.showSnackb(
+          context, "Activa el gps para obtener tu ubicaciòn");
     }
+  }
+
+  Future animateCameraToPosition(double latitude, double longitude) async {
+    GoogleMapController controller = await _mapController.future;
+    if (controller != null) {
+      controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+          bearing: 0, target: LatLng(latitude, longitude), zoom: 17)));
+    } else {}
   }
 
   void checkGPS() async {

@@ -93,6 +93,7 @@ class _MapDriverState extends State<MapDriver> {
       initialCameraPosition: _con.initialPosition,
       onMapCreated: _con.onMapCreaated,
       myLocationButtonEnabled: true,
+      myLocationEnabled: true,
     );
   }
 }
