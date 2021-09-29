@@ -50,7 +50,7 @@ class _MapDriverState extends State<MapDriver> {
       margin: EdgeInsets.symmetric(horizontal: 5),
       child: Card(
           shape: CircleBorder(),
-          color: Colors.white
+          color: Colors.white,
           elevation: 4.0,
           child: Container(
             padding: EdgeInsets.all(10),
