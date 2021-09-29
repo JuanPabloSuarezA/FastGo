@@ -30,13 +30,24 @@ class _MapDriverState extends State<MapDriver> {
           SafeArea(
             child: Column(
               children: [
-                _btnMenu(),
+                Row(
+                  children: [_btnMenu(), _btnPosition()],
+                ),
                 Expanded(child: Container()),
                 _btnConnect()
               ],
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget _btnPosition() {
+    return Container(
+      child: Card(
+        shape: CircleBorder(),
+        child: Icon(Icons.location_searching),
       ),
     );
   }
