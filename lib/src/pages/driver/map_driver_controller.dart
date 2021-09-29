@@ -20,8 +20,9 @@ class MapDriverController {
   StreamSubscription<Position> _positionStream;
   BitmapDescriptor MDriver;
 
-  Future init(BuildContext context) {
+  Future init(BuildContext context) async {
     this.context = context;
+    MDriver = await CTimg('assets\img\icon_car.png');
     checkGPS();
   }
 
@@ -36,10 +37,14 @@ class MapDriverController {
       await _determinePosition();
       _position = await Geolocator.getLastKnownPosition();
       CenterPosition();
+      marcador('driver', _position.latitude,_position.longitude, 'tu ubicacion', '', MDriver)
+
       _positionStream = Geolocator.getPositionStream(
               desiredAccuracy: LocationAccuracy.best, distanceFilter: 1)
           .listen((Position position) {
         _position = position;
+         marcador('driver', _position.latitude,_position.longitude, 'tu ubicacion', '', MDriver)
+
         animateCameraToPosition(_position.latitude, _position.longitude);
       });
     } catch (error) {
