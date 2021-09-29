@@ -1,4 +1,5 @@
-import 'package:fast_go/src/pages/client/register/client_register_controller.dart';
+import 'package:fast_go/src/pages/driver/d_register_controller.dart';
+import 'package:fast_go/src/utils/plate_otp.dart';
 import 'package:fast_go/src/widgets/button_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -6,14 +7,14 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:fast_go/src/utils/colors.dart' as util;
 import 'package:google_fonts/google_fonts.dart';
 
-class ClientRegisterPage extends StatefulWidget {
+class DriverRegisterPage extends StatefulWidget {
   @override
-  _ClientRegisterPageState createState() => _ClientRegisterPageState();
+  _DriverRegisterPageState createState() => _DriverRegisterPageState();
 }
 
-class _ClientRegisterPageState extends State<ClientRegisterPage> {
-  ClientRegisterController _clientRegisterController =
-      new ClientRegisterController();
+class _DriverRegisterPageState extends State<DriverRegisterPage> {
+  DriverRegisterController _driverRegisterController =
+      new DriverRegisterController();
 
   @override
   void initState() {
@@ -21,7 +22,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
     super.initState();
 
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      _clientRegisterController.init(context);
+      _driverRegisterController.init(context);
     });
   }
 
@@ -34,6 +35,18 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
             children: [
               _topDecoration(),
               _labelLogIn(),
+              _textCarCode(),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 25),
+                child: OtpText(
+                  con1: _driverRegisterController.plateCon1,
+                  con2: _driverRegisterController.plateCon2,
+                  con3: _driverRegisterController.plateCon3,
+                  con4: _driverRegisterController.plateCon4,
+                  con5: _driverRegisterController.plateCon5,
+                  con6: _driverRegisterController.plateCon6,
+                ),
+              ),
               _textFieldUserName(),
               _textFieldEmail(),
               _textFieldPasswd(),
@@ -46,6 +59,17 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
         ));
   }
 
+  Widget _textCarCode() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+      child: Text(
+        "Placa vehicular",
+        style: TextStyle(color: Colors.grey[800], fontSize: 20),
+      ),
+    );
+  }
+
   Widget _btnRegister(String text) {
     return Container(
       width: double.infinity,
@@ -53,7 +77,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
       child: ButtonApp(
         text: text,
         color: util.Colors.fgcolor,
-        onPressed: _clientRegisterController.register,
+        onPressed: _driverRegisterController.register,
       ),
     );
   }
@@ -63,7 +87,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: Text(
-        "Registro",
+        "Registro de conductor",
         style: TextStyle(
             color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
       ),
@@ -74,7 +98,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         child: TextField(
-          controller: _clientRegisterController.emailController,
+          controller: _driverRegisterController.emailController,
           decoration: InputDecoration(
               hintText: "Correo@upb.edu.co",
               labelText: "Correo electrónico",
@@ -89,7 +113,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         child: TextField(
-          controller: _clientRegisterController.userNameController,
+          controller: _driverRegisterController.userNameController,
           decoration: InputDecoration(
               hintText: "user123",
               labelText: "Nombre de usuario",
@@ -104,7 +128,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         child: TextField(
-          controller: _clientRegisterController.passwdController,
+          controller: _driverRegisterController.passwdController,
           obscureText: true,
           decoration: InputDecoration(
               labelText: "Contraseña",
@@ -119,7 +143,7 @@ class _ClientRegisterPageState extends State<ClientRegisterPage> {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         child: TextField(
-          controller: _clientRegisterController.confPasswdController,
+          controller: _driverRegisterController.confPasswdController,
           obscureText: true,
           decoration: InputDecoration(
               labelText: "Confirmar contraseña",

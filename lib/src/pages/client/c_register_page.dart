@@ -1,4 +1,4 @@
-import 'package:fast_go/src/pages/driver/driver_register_controller.dart';
+import 'package:fast_go/src/pages/client/c_register_controller.dart';
 import 'package:fast_go/src/widgets/button_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -6,14 +6,14 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:fast_go/src/utils/colors.dart' as util;
 import 'package:google_fonts/google_fonts.dart';
 
-class DriverRegisterPage extends StatefulWidget {
+class ClientRegisterPage extends StatefulWidget {
   @override
-  _DriverRegisterPageState createState() => _DriverRegisterPageState();
+  _ClientRegisterPageState createState() => _ClientRegisterPageState();
 }
 
-class _DriverRegisterPageState extends State<DriverRegisterPage> {
-  DriverRegisterController _driverRegisterController =
-      new DriverRegisterController();
+class _ClientRegisterPageState extends State<ClientRegisterPage> {
+  ClientRegisterController _clientRegisterController =
+      new ClientRegisterController();
 
   @override
   void initState() {
@@ -21,7 +21,7 @@ class _DriverRegisterPageState extends State<DriverRegisterPage> {
     super.initState();
 
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      _driverRegisterController.init(context);
+      _clientRegisterController.init(context);
     });
   }
 
@@ -53,7 +53,7 @@ class _DriverRegisterPageState extends State<DriverRegisterPage> {
       child: ButtonApp(
         text: text,
         color: util.Colors.fgcolor,
-        onPressed: _driverRegisterController.register,
+        onPressed: _clientRegisterController.register,
       ),
     );
   }
@@ -63,7 +63,7 @@ class _DriverRegisterPageState extends State<DriverRegisterPage> {
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: Text(
-        "Registro de conductor",
+        "Registro",
         style: TextStyle(
             color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
       ),
@@ -74,7 +74,7 @@ class _DriverRegisterPageState extends State<DriverRegisterPage> {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         child: TextField(
-          controller: _driverRegisterController.emailController,
+          controller: _clientRegisterController.emailController,
           decoration: InputDecoration(
               hintText: "Correo@upb.edu.co",
               labelText: "Correo electrónico",
@@ -89,7 +89,7 @@ class _DriverRegisterPageState extends State<DriverRegisterPage> {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         child: TextField(
-          controller: _driverRegisterController.userNameController,
+          controller: _clientRegisterController.userNameController,
           decoration: InputDecoration(
               hintText: "user123",
               labelText: "Nombre de usuario",
@@ -104,7 +104,7 @@ class _DriverRegisterPageState extends State<DriverRegisterPage> {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         child: TextField(
-          controller: _driverRegisterController.passwdController,
+          controller: _clientRegisterController.passwdController,
           obscureText: true,
           decoration: InputDecoration(
               labelText: "Contraseña",
@@ -119,7 +119,7 @@ class _DriverRegisterPageState extends State<DriverRegisterPage> {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         child: TextField(
-          controller: _driverRegisterController.confPasswdController,
+          controller: _clientRegisterController.confPasswdController,
           obscureText: true,
           decoration: InputDecoration(
               labelText: "Confirmar contraseña",

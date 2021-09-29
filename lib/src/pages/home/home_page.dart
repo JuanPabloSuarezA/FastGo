@@ -1,15 +1,30 @@
 import 'package:fast_go/src/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:fast_go/src/utils/colors.dart' as util;
 import 'package:google_fonts/google_fonts.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final HomeController _homeController = new HomeController();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      _homeController.init(context);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    _homeController.init(context);
     return Scaffold(
         appBar: AppBar(),
         body: SafeArea(

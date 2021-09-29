@@ -10,7 +10,13 @@ class ShPref {
 
   Future<dynamic> read(String key) async {
     final preferences = await SharedPreferences.getInstance();
-    return json.decode(preferences.getString(key));
+    String pref;
+    try {
+      pref = preferences.getString(key);
+      return json.decode(pref);
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<bool> contains(String key) async {

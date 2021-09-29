@@ -1,7 +1,7 @@
 import 'package:fast_go/src/models/client.dart';
 import 'package:fast_go/src/providers/auth_provider.dart';
 import 'package:fast_go/src/providers/client_provider.dart';
-import 'package:fast_go/src/utils/progress_dialog.dart';
+import 'package:fast_go/src/utils/app_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:fast_go/src/utils/snackb.dart' as util;
 import 'package:progress_dialog/progress_dialog.dart';
@@ -23,7 +23,7 @@ class ClientRegisterController {
     _authProvider = new AuthProvider();
     _clientProvider = new ClientProvider();
     _progressDialog =
-        MProgressDialog.createProgressDialog(context, "Registrando usuario...");
+        FGDialog.createProgressDialog(context, "Registrando usuario...");
   }
 
   void register() async {
@@ -73,12 +73,12 @@ class ClientRegisterController {
 
         await _clientProvider.create(client);
         _progressDialog.hide();
-        print("Registro exitoso");
-        util.Snackb.showSnackb(context, "Registro exitoso");
+
+        Navigator.pushNamedAndRemoveUntil(
+            context, "client/map", (route) => false);
       } else {
-        util.Snackb.showSnackb(context, "Fallo al registrarse");
         _progressDialog.hide();
-        print("Fallo al registrarse");
+        util.Snackb.showSnackb(context, "Fallo al registrarse");
       }
     } catch (error) {
       _progressDialog.hide();

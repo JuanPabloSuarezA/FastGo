@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class AuthProvider {
   FirebaseAuth _firebaseAuth;
@@ -8,6 +9,15 @@ class AuthProvider {
 
   User getUser() {
     return _firebaseAuth.currentUser;
+  }
+
+  bool sign() {
+    final currUser = _firebaseAuth.currentUser;
+
+    if (currUser != null) {
+      return true;
+    }
+    return false;
   }
 
   Future<bool> login(String email, String password) async {
@@ -46,5 +56,9 @@ class AuthProvider {
     }
 
     return true;
+  }
+
+  Future<void> logOut() async {
+    return Future.wait([_firebaseAuth.signOut()]);
   }
 }

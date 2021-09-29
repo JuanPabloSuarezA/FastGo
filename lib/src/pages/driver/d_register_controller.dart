@@ -1,7 +1,7 @@
-import 'package:fast_go/src/models/client.dart';
+import 'package:fast_go/src/models/driver.dart';
 import 'package:fast_go/src/providers/auth_provider.dart';
-import 'package:fast_go/src/providers/client_provider.dart';
-import 'package:fast_go/src/utils/progress_dialog.dart';
+import 'package:fast_go/src/providers/driver_provider.dart';
+import 'package:fast_go/src/utils/app_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:fast_go/src/utils/snackb.dart' as util;
 import 'package:progress_dialog/progress_dialog.dart';
@@ -13,17 +13,23 @@ class DriverRegisterController {
   TextEditingController userNameController = new TextEditingController();
   TextEditingController confPasswdController = new TextEditingController();
   TextEditingController passwdController = new TextEditingController();
+  TextEditingController plateCon1 = new TextEditingController();
+  TextEditingController plateCon2 = new TextEditingController();
+  TextEditingController plateCon3 = new TextEditingController();
+  TextEditingController plateCon4 = new TextEditingController();
+  TextEditingController plateCon5 = new TextEditingController();
+  TextEditingController plateCon6 = new TextEditingController();
 
   AuthProvider _authProvider;
-  ClientProvider _clientProvider;
+  DriverProvider _driverProvider;
   ProgressDialog _progressDialog;
 
   Future init(BuildContext context) {
     this.context = context;
     _authProvider = new AuthProvider();
-    _clientProvider = new ClientProvider();
+    _driverProvider = new DriverProvider();
     _progressDialog =
-        MProgressDialog.createProgressDialog(context, "Registrando usuario...");
+        FGDialog.createProgressDialog(context, "Registrando usuario...");
   }
 
   void register() async {
@@ -32,7 +38,17 @@ class DriverRegisterController {
     String passwd = passwdController.text.trim();
     String confPasswd = confPasswdController.text.trim();
 
-    print("email: $email");
+    String plateCode1 = plateCon1.text.trim();
+    String plateCode2 = plateCon2.text.trim();
+    String plateCode3 = plateCon3.text.trim();
+    String plateCode4 = plateCon4.text.trim();
+    String plateCode5 = plateCon5.text.trim();
+    String plateCode6 = plateCon6.text.trim();
+
+    String plate =
+        "$plateCode1$plateCode2$plateCode3 - $plateCode4$plateCode5$plateCode6";
+
+    print("Email: $email");
     print("Password: $passwd");
 
     if (username.isEmpty ||
@@ -64,21 +80,22 @@ class DriverRegisterController {
       bool isRegister = await _authProvider.register(email, passwd);
 
       if (isRegister) {
-        Client client = new Client(
+        Driver driver = new Driver(
           id: _authProvider.getUser().uid,
           email: _authProvider.getUser().email,
           username: username,
           password: passwd,
+          plate: plate,
         );
 
-        await _clientProvider.create(client);
+        await _driverProvider.create(driver);
         _progressDialog.hide();
-        print("Registro exitoso");
-        util.Snackb.showSnackb(context, "Registro exitoso");
+
+        Navigator.pushNamedAndRemoveUntil(
+            context, "driver/map", (route) => false);
       } else {
-        util.Snackb.showSnackb(context, "Fallo al registrarse");
         _progressDialog.hide();
-        print("Fallo al registrarse");
+        util.Snackb.showSnackb(context, "Fallo al registrarse");
       }
     } catch (error) {
       _progressDialog.hide();

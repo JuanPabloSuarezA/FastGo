@@ -1,6 +1,8 @@
-import 'package:fast_go/src/pages/driver/driver_register_page.dart';
+import 'package:fast_go/src/pages/client/map_client.dart';
+import 'package:fast_go/src/pages/driver/d_register_page.dart';
+import 'package:fast_go/src/pages/driver/map_driver.dart';
 import 'package:fast_go/src/pages/login/login_page.dart';
-import 'package:fast_go/src/pages/client/register/client_register_page.dart';
+import 'package:fast_go/src/pages/client/c_register_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fast_go/src/pages/home/home_page.dart';
@@ -37,6 +39,8 @@ class _MyAppState extends State<MyApp> {
         "login": (context) => LoginPage(),
         "client/register": (context) => ClientRegisterPage(),
         "driver/register": (context) => DriverRegisterPage(),
+        "driver/map": (context) => MapDriver(),
+        "client/map": (context) => MapClient(),
       },
       theme: ThemeData(
           textTheme: GoogleFonts.nobileTextTheme(

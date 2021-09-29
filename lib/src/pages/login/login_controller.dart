@@ -1,6 +1,10 @@
+import 'package:fast_go/src/models/client.dart';
+import 'package:fast_go/src/models/driver.dart';
 import 'package:fast_go/src/providers/auth_provider.dart';
+import 'package:fast_go/src/providers/client_provider.dart';
+import 'package:fast_go/src/providers/driver_provider.dart';
 import 'package:fast_go/src/utils/ShPref.dart';
-import 'package:fast_go/src/utils/progress_dialog.dart';
+import 'package:fast_go/src/utils/app_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:fast_go/src/utils/snackb.dart' as util;
@@ -14,6 +18,8 @@ class LoginController {
 
   AuthProvider _authProvider;
   ProgressDialog _progressDialog;
+  DriverProvider _driverProvider;
+  ClientProvider _clientProvider;
 
   ShPref _shPref;
   String _kindUser;
@@ -21,8 +27,10 @@ class LoginController {
   Future init(BuildContext context) async {
     this.context = context;
     _authProvider = new AuthProvider();
+    _driverProvider = new DriverProvider();
+    _clientProvider = new ClientProvider();
     _progressDialog =
-        MProgressDialog.createProgressDialog(context, "Iniciando sesión...");
+        FGDialog.createProgressDialog(context, "Iniciando sesión...");
     _shPref = new ShPref();
 
     _kindUser = await _shPref.read("kindUser");
@@ -53,10 +61,30 @@ class LoginController {
       _progressDialog.hide();
 
       if (isLogin) {
-        print("Inicio de sesión exitoso");
-        util.Snackb.showSnackb(context, "Inicio de sesión exitoso");
+        if (_kindUser == "client") {
+          Client client = await _clientProvider
+              .getClientWithId(_authProvider.getUser().uid);
+
+          if (client != null) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, "client/map", (route) => false);
+          } else {
+            util.Snackb.showSnackb(context, "Usuario inválido");
+            await _authProvider.logOut();
+          }
+        } else if (_kindUser == "driver") {
+          Driver driver = await _driverProvider
+              .getDriverWithId(_authProvider.getUser().uid);
+
+          if (driver != null) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, "driver/map", (route) => false);
+          } else {
+            util.Snackb.showSnackb(context, "Usuario inválido");
+            await _authProvider.logOut();
+          }
+        }
       } else {
-        print("Fallo al iniciar sesión");
         util.Snackb.showSnackb(context, "Fallo al iniciar sesión");
       }
     } catch (error) {
