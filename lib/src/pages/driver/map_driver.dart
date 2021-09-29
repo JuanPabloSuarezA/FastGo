@@ -51,7 +51,11 @@ class _MapDriverState extends State<MapDriver> {
           shape: CircleBorder(),
           child: Container(
             padding: EdgeInsets.all(10),
-            child: Icon(Icons.location_searching),
+            child: Icon(
+              Icons.location_searching,
+              color: Colors.grey,
+              size: 20,
+            ),
           )),
     );
   }
