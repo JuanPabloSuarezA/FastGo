@@ -45,6 +45,7 @@ class _MapDriverState extends State<MapDriver> {
 
   Widget _btnPosition() {
     return Container(
+      alignment: Alignment.centerRight,
       child: Card(
         shape: CircleBorder(),
         child: Icon(Icons.location_searching),
