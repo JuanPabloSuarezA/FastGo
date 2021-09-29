@@ -24,6 +24,14 @@ class MapDriverController {
     _mapController.complete(controller);
   }
 
+  void updateLocation ()async{
+    try{
+      await _determinePosition();
+    }catch(error){
+      print('Error en la localizacion: $error')
+    }
+  }
+
   void checkGPS() async {
     bool isLocation = await Geolocator.isLocationServiceEnabled();
     if (isLocation) {
@@ -32,6 +40,10 @@ class MapDriverController {
     } else {
       print('GPS Desactivado');
       bool locationGPS = await location.Location().requestService();
+      if (locationGPS) {
+        updateLocation();
+        print('GPS activado');
+      }
     }
   }
 
