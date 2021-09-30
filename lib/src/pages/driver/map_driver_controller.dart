@@ -111,7 +111,7 @@ class MapDriverController {
   void dismiss() {
     _positionStream?.cancel();
     statusub?.cancel();
-    _driverinfoSub.cancel();
+    _driverinfoSub?.cancel();
   }
 
   void updateLocation() async {
