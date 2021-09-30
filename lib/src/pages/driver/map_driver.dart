@@ -60,6 +60,7 @@ class _MapDriverState extends State<MapDriver> {
         children: [
           DrawerHeader(
               child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
                 child: Text(
@@ -110,15 +111,12 @@ class _MapDriverState extends State<MapDriver> {
   }
 
   Widget _btnMenu() {
-    return GestureDetector(
-      onTap: ,
-    child: Container(
+    return Container(
       alignment: Alignment.centerLeft,
       child: IconButton(
-        onPressed: () {},
+        onPressed: _con.OpenMenu,
         icon: Icon(Icons.menu, color: Colors.white),
       ),
-    )
     );
   }
 

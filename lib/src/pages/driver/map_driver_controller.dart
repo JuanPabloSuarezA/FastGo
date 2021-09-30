@@ -86,6 +86,10 @@ class MapDriverController {
     });
   }
 
+  void OpenMenu() {
+    key.currentState.openDrawer();
+  }
+
   void dismiss() {
     _positionStream?.cancel();
     statusub?.cancel();
