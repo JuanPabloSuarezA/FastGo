@@ -22,6 +22,14 @@ class _MapDriverState extends State<MapDriver> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    //print('ejecuntando');
+    _con.dismiss();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _con.key,
@@ -46,7 +54,8 @@ class _MapDriverState extends State<MapDriver> {
   }
 
   Widget _btnPosition() {
-    return Container(
+    return GestureDetector(
+        child: Container(
       alignment: Alignment.centerRight,
       margin: EdgeInsets.symmetric(horizontal: 5),
       child: Card(
@@ -61,7 +70,7 @@ class _MapDriverState extends State<MapDriver> {
               size: 20,
             ),
           )),
-    );
+    ));
   }
 
   Widget _btnMenu() {

@@ -29,7 +29,7 @@ class MapDriverController {
   BitmapDescriptor MDriver;
   GeoFireProvider _geoFireProvider;
   AuthProvider _authProvider;
-
+  StreamSubscription<DocumentSnapshot> statusub;
   bool isConnect = false;
   ProgressDialog _progressDialog;
 
@@ -76,7 +76,7 @@ class MapDriverController {
     Stream<DocumentSnapshot> status =
         _geoFireProvider.getlocationID(_authProvider.getUser().uid);
 
-    status.listen((DocumentSnapshot document) {
+    statusub = status.listen((DocumentSnapshot document) {
       if (document.exists) {
         isConnect = true;
       } else {
@@ -84,6 +84,10 @@ class MapDriverController {
       }
       refresh();
     });
+  }
+
+  void dismiss() {
+    _positionStream?.cancel();
   }
 
   void updateLocation() async {
