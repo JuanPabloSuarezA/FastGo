@@ -65,7 +65,7 @@ class _MapDriverState extends State<MapDriver> {
               children: [
                 Container(
                   child: Text(
-                    'Nombre de usuario',
+                    _con.driver.username,
                     style: TextStyle(
                         fontSize: 18,
                         color: Colors.black,
@@ -75,7 +75,7 @@ class _MapDriverState extends State<MapDriver> {
                 ),
                 Container(
                   child: Text(
-                    'Email',
+                    _con.driver.email,
                     style: TextStyle(
                         fontSize: 18,
                         color: Colors.grey,

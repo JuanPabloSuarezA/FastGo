@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fast_go/src/models/driver.dart';
 import 'package:fast_go/src/providers/auth_provider.dart';
 import 'package:fast_go/src/providers/geofire_provide.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,8 @@ import 'package:fast_go/src/utils/snackb.dart' as utils;
 import 'package:fast_go/src/utils/app_dialog.dart';
 import 'package:fast_go/src/providers/geofire_provide.dart';
 import 'package:fast_go/src/providers/auth_provider.dart';
+import 'package:fast_go/src/providers/driver_provider.dart';
+import 'package:fast_go/src/models/driver.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class MapDriverController {
@@ -29,19 +32,32 @@ class MapDriverController {
   BitmapDescriptor MDriver;
   GeoFireProvider _geoFireProvider;
   AuthProvider _authProvider;
+  DriverProvider _driverProvider;
   StreamSubscription<DocumentSnapshot> statusub;
   bool isConnect = false;
   ProgressDialog _progressDialog;
+
+  Driver driver;
 
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
     this.refresh = refresh;
     _geoFireProvider = new GeoFireProvider();
     _authProvider = new AuthProvider();
+    _driverProvider = new DriverProvider();
     _progressDialog = ProgressDialog(context);
     MDriver = await CTimg('assets/img/icon_car.png');
 
     checkGPS();
+    getdriverInfo();
+  }
+
+  void getdriverInfo() {
+    Stream<DocumentSnapshot> driverStream =
+        _driverProvider.GetIDStream(_authProvider.getUser().uid);
+    driverStream.listen((DocumentSnapshot document) {
+      driver = Driver.fromJson(document.data());
+    });
   }
 
   void onMapCreaated(GoogleMapController controller) {
