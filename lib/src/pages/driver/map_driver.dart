@@ -97,7 +97,19 @@ class _MapDriverState extends State<MapDriver> {
             trailing: Icon(Icons.edit),
             // leading: Icon(Icons.cancel),
             onTap: () {},
-          )
+          ),
+          ListTile(
+            title: Text('Viajes Realizados'),
+            trailing: Icon(Icons.loupe),
+            // leading: Icon(Icons.cancel),
+            onTap: () {},
+          ),
+          ListTile(
+            title: Text('Cerrar sesion'),
+            trailing: Icon(Icons.power_settings_new),
+            // leading: Icon(Icons.cancel),
+            onTap: () {},
+          ),
         ],
       ),
     );
