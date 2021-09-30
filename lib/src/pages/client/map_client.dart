@@ -2,6 +2,7 @@ import 'package:fast_go/src/widgets/button_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:fast_go/src/pages/client/map_client_controller.dart';
 
 class MapClient extends StatefulWidget {
   @override
@@ -9,7 +10,7 @@ class MapClient extends StatefulWidget {
 }
 
 class _MapClientState extends State<MapClient> {
-  MapDriverController _con = new MapDriverController();
+  MapClientController _con = new MapClientController();
 
   @override
   void initState() {

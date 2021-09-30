@@ -23,6 +23,10 @@ class ClientProvider {
     }
   }
 
+  Stream<DocumentSnapshot> GetIDStream(String id) {
+    return _ref.doc(id).snapshots(includeMetadataChanges: true);
+  }
+
   Future<Client> getClientWithId(String id) async {
     DocumentSnapshot doc = await _ref.doc(id).get();
     Client client;
