@@ -52,8 +52,10 @@ class MapDriverController {
 
   void connect() {
     if (isConnect) {
+      isConnect = false;
       disconnect();
     } else {
+      isConnect = true;
       updateLocation();
     }
   }
