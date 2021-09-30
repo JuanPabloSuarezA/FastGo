@@ -59,31 +59,45 @@ class _MapDriverState extends State<MapDriver> {
       child: ListView(
         children: [
           DrawerHeader(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                child: Text(
-                  'Nombre de usuario',
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                  maxLines: 1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  child: Text(
+                    'Nombre de usuario',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                  ),
                 ),
-              ),
-              Container(
-                child: Text(
-                  'Email',
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold),
-                  maxLines: 1,
+                Container(
+                  child: Text(
+                    'Email',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                  ),
                 ),
-              )
-            ],
-          ))
+                SizedBox(height: 10),
+                CircleAvatar(
+                  backgroundImage: AssetImage('assets/img/profile.jpg'),
+                  radius: 40,
+                )
+              ],
+            ),
+            decoration: BoxDecoration(color: Colors.blueAccent[200]),
+          ),
+          ListTile(
+            title: Text('Editar Perfil'),
+            trailing: Icon(Icons.edit),
+            // leading: Icon(Icons.cancel),
+            onTap: () {},
+          )
         ],
       ),
     );
