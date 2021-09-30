@@ -108,7 +108,7 @@ class _MapDriverState extends State<MapDriver> {
             title: Text('Cerrar Sesion'),
             trailing: Icon(Icons.power_settings_new),
             // leading: Icon(Icons.cancel),
-            onTap: () {},
+            onTap: _con.Singout,
           ),
         ],
       ),

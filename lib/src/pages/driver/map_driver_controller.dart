@@ -114,6 +114,11 @@ class MapDriverController {
     _driverinfoSub?.cancel();
   }
 
+  void Singout() async {
+    await _authProvider.sign();
+    Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
+  }
+
   void updateLocation() async {
     try {
       await _determinePosition();
