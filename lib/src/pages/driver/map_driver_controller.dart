@@ -34,6 +34,7 @@ class MapDriverController {
   AuthProvider _authProvider;
   DriverProvider _driverProvider;
   StreamSubscription<DocumentSnapshot> statusub;
+  StreamSubscription<DocumentSnapshot> _driverinfoSub;
   bool isConnect = false;
   ProgressDialog _progressDialog;
 
@@ -55,7 +56,7 @@ class MapDriverController {
   void getdriverInfo() {
     Stream<DocumentSnapshot> driverStream =
         _driverProvider.GetIDStream(_authProvider.getUser().uid);
-    driverStream.listen((DocumentSnapshot document) {
+    _driverinfoSub = driverStream.listen((DocumentSnapshot document) {
       driver = Driver.fromJson(document.data());
       refresh();
     });
@@ -110,6 +111,7 @@ class MapDriverController {
   void dismiss() {
     _positionStream?.cancel();
     statusub?.cancel();
+    _driverinfoSub.cancel();
   }
 
   void updateLocation() async {
