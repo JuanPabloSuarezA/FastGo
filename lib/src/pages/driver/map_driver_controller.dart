@@ -115,7 +115,7 @@ class MapDriverController {
   }
 
   void Singout() async {
-    await _authProvider.sign();
+    await _authProvider.logOut();
     Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
   }
 
