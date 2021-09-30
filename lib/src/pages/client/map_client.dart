@@ -65,7 +65,7 @@ class _MapClientState extends State<MapClient> {
               children: [
                 Container(
                   child: Text(
-                    _con.driver?.username ?? 'Nombre de usuario',
+                    _con.client?.username ?? 'Nombre de usuario',
                     style: TextStyle(
                         fontSize: 18,
                         color: Colors.black,
@@ -75,7 +75,7 @@ class _MapClientState extends State<MapClient> {
                 ),
                 Container(
                   child: Text(
-                    _con.driver?.email ?? 'Email',
+                    _con.client?.email ?? 'Email',
                     style: TextStyle(
                         fontSize: 18,
                         color: Colors.grey,

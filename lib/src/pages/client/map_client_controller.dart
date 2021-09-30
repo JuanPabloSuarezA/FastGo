@@ -39,7 +39,7 @@ class MapClientController {
   DriverProvider _driverProvider;
   ClientProvider _clientProvider;
   StreamSubscription<DocumentSnapshot> statusub;
-  StreamSubscription<DocumentSnapshot> _driverinfoSub;
+  StreamSubscription<DocumentSnapshot> _clientinfoSub;
   bool isConnect = false;
   ProgressDialog _progressDialog;
 
@@ -59,10 +59,10 @@ class MapClientController {
   }
 
   void getclientInfo() {
-    Stream<DocumentSnapshot> driverStream =
-        _driverProvider.GetIDStream(_authProvider.getUser().uid);
-    _driverinfoSub = driverStream.listen((DocumentSnapshot document) {
-      driver = Driver.fromJson(document.data());
+    Stream<DocumentSnapshot> clientStream =
+        _clientProvider.GetIDStream(_authProvider.getUser().uid);
+    _clientinfoSub = clientStream.listen((DocumentSnapshot document) {
+      client = Client.fromJson(document.data());
       refresh();
     });
   }
@@ -71,12 +71,6 @@ class MapClientController {
     controller.setMapStyle(
         '[{"elementType": "geometry","stylers": [{"color": "#242f3e"}]},{"elementType": "labels.text.fill","stylers":[{"color": "#746855"}]},{"elementType": "labels.text.stroke","stylers": [{"color": "#242f3e"}]},{"featureType": "administrative.locality",    "elementType": "labels.text.fill",    "stylers": [      {        "color": "#d59563"      }    ]  },  {    "featureType": "poi",    "elementType": "labels.text.fill",    "stylers": [      {        "color": "#d59563"      }    ]  },  {    "featureType": "poi.park",    "elementType": "geometry",    "stylers": [      {        "color": "#263c3f"      }    ]  },  {    "featureType": "poi.park",    "elementType": "labels.text.fill",    "stylers": [      {        "color": "#6b9a76"      }    ]  },  {    "featureType": "road",    "elementType": "geometry",    "stylers": [      {        "color": "#38414e"      }    ]  },  {    "featureType": "road",    "elementType": "geometry.stroke",    "stylers": [      {        "color": "#212a37"      }    ]  },  {    "featureType": "road",    "elementType": "labels.text.fill",    "stylers": [      {        "color": "#9ca5b3"      }    ]  },  {    "featureType": "road.highway",    "elementType": "geometry",    "stylers": [      {        "color": "#746855"      }    ]  },  {    "featureType": "road.highway",    "elementType": "geometry.stroke",    "stylers": [      {        "color": "#1f2835"      }    ]  },  {    "featureType": "road.highway",    "elementType": "labels.text.fill",    "stylers": [      {        "color": "#f3d19c"      }    ]  },  {    "featureType": "transit",    "elementType": "geometry",    "stylers": [      {        "color": "#2f3948"      }    ]  },  {    "featureType": "transit.station",    "elementType": "labels.text.fill",    "stylers": [      {        "color": "#d59563"      }    ]  },  {    "featureType": "water",    "elementType": "geometry",    "stylers": [      {        "color": "#17263c"      }    ]  },  {    "featureType": "water",    "elementType": "labels.text.fill",    "stylers": [      {        "color": "#515c6d"      }    ]  },  {    "featureType": "water",    "elementType": "labels.text.stroke",    "stylers": [      {        "color": "#17263c"      }    ]  }]');
     _mapController.complete(controller);
-  }
-
-  void saveLocation() async {
-    await _geoFireProvider.create(
-        _authProvider.getUser().uid, _position.latitude, _position.longitude);
-    _progressDialog.hide();
   }
 
   void connect() {
@@ -116,7 +110,7 @@ class MapClientController {
   void dismiss() {
     _positionStream?.cancel();
     statusub?.cancel();
-    _driverinfoSub?.cancel();
+    _clientinfoSub?.cancel();
   }
 
   void Singout() async {
@@ -129,7 +123,6 @@ class MapClientController {
       await _determinePosition();
       _position = await Geolocator.getLastKnownPosition();
       CenterPosition();
-      saveLocation();
 
       marcador('driver', _position.latitude, _position.longitude,
           'tu ubicacion', '', MDriver);
@@ -143,7 +136,7 @@ class MapClientController {
             'tu ubicacion', '', MDriver);
 
         animateCameraToPosition(_position.latitude, _position.longitude);
-        saveLocation();
+
         refresh();
       });
     } catch (error) {
