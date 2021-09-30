@@ -45,7 +45,7 @@ class _MapClientState extends State<MapClient> {
                   children: [_btnMenu(), _btnPosition()],
                 ),
                 Expanded(child: Container()),
-                _btnConnect()
+                _btnRequest()
               ],
             ),
           )
@@ -146,14 +146,14 @@ class _MapClientState extends State<MapClient> {
     );
   }
 
-  Widget _btnConnect() {
+  Widget _btnRequest() {
     return Container(
       height: 50,
       alignment: Alignment.bottomCenter,
       margin: EdgeInsets.symmetric(horizontal: 60, vertical: 30),
       child: ButtonApp(
-        onPressed: _con.connect,
-        text: _con.isConnect ? 'Desconectarse' : 'Conectarse',
+        onPressed: () {},
+        text: 'Solicitar Servicio',
         color: _con.isConnect ? Colors.red : Colors.blueAccent,
         textColor: Colors.white,
       ),
