@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:fast_go/src/providers/auth_provider.dart';
 import 'package:fast_go/src/providers/geofire_provide.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -6,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart' as location;
 import 'package:fast_go/src/utils/snackb.dart' as utils;
 import 'package:fast_go/src/providers/geofire_provide.dart';
+import 'package:fast_go/src/providers/auth_provider.dart';
 
 class MapDriverController {
   BuildContext context;
@@ -23,11 +25,17 @@ class MapDriverController {
   StreamSubscription<Position> _positionStream;
   BitmapDescriptor MDriver;
   GeoFireProvider _geoFireProvider;
+  AuthProvider _authProvider;
+
+  bool isConnect = false;
 
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
     this.refresh = refresh;
+    _geoFireProvider = new GeoFireProvider();
+    _authProvider = new AuthProvider();
     MDriver = await CTimg('assets/img/icon_car.png');
+
     checkGPS();
   }
 
@@ -37,11 +45,31 @@ class MapDriverController {
     _mapController.complete(controller);
   }
 
+  void saveLocation() async {
+    await _geoFireProvider.create(
+        _authProvider.getUser().uid, _position.latitude, _position.longitude);
+  }
+
+  void connect() {
+    if (isConnect) {
+      disconnect();
+    } else {
+      updateLocation();
+    }
+  }
+
+  void disconnect() {
+    _positionStream?.cancel();
+    _geoFireProvider.delete(_authProvider.getUser().uid);
+  }
+
   void updateLocation() async {
     try {
       await _determinePosition();
       _position = await Geolocator.getLastKnownPosition();
       CenterPosition();
+      saveLocation();
+
       marcador('driver', _position.latitude, _position.longitude,
           'tu ubicacion', '', MDriver);
       refresh();
@@ -54,6 +82,7 @@ class MapDriverController {
             'tu ubicacion', '', MDriver);
 
         animateCameraToPosition(_position.latitude, _position.longitude);
+        saveLocation();
         refresh();
       });
     } catch (error) {
