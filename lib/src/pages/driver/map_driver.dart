@@ -80,8 +80,9 @@ class _MapDriverState extends State<MapDriver> {
       alignment: Alignment.bottomCenter,
       margin: EdgeInsets.symmetric(horizontal: 60, vertical: 30),
       child: ButtonApp(
-        text: 'Conectarse',
-        color: Colors.blueAccent,
+        onPressed: _con.connect,
+        text: _con.isConnect ? 'Desconectarse' : 'Conectarse',
+        color: _con.isConnect ? Colors.red : Colors.blueAccent,
         textColor: Colors.white,
       ),
     );
