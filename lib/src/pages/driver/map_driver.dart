@@ -33,6 +33,7 @@ class _MapDriverState extends State<MapDriver> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _con.key,
+      drawer: _MenuBurger(),
       body: Stack(
         children: [
           _googleMapsWidget(),
@@ -53,33 +54,71 @@ class _MapDriverState extends State<MapDriver> {
     );
   }
 
+  Widget _MenuBurger() {
+    return Drawer(
+      child: ListView(
+        children: [
+          DrawerHeader(
+              child: Column(
+            children: [
+              Container(
+                child: Text(
+                  'Nombre de usuario',
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                  maxLines: 1,
+                ),
+              ),
+              Container(
+                child: Text(
+                  'Email',
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold),
+                  maxLines: 1,
+                ),
+              )
+            ],
+          ))
+        ],
+      ),
+    );
+  }
+
   Widget _btnPosition() {
     return GestureDetector(
+        onTap: _con.CenterPosition,
         child: Container(
-      alignment: Alignment.centerRight,
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      child: Card(
-          shape: CircleBorder(),
-          color: Colors.white,
-          elevation: 4.0,
-          child: Container(
-            padding: EdgeInsets.all(10),
-            child: Icon(
-              Icons.location_searching,
-              color: Colors.grey,
-              size: 20,
-            ),
-          )),
-    ));
+          alignment: Alignment.centerRight,
+          margin: EdgeInsets.symmetric(horizontal: 5),
+          child: Card(
+              shape: CircleBorder(),
+              color: Colors.white,
+              elevation: 4.0,
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: Icon(
+                  Icons.location_searching,
+                  color: Colors.grey,
+                  size: 20,
+                ),
+              )),
+        ));
   }
 
   Widget _btnMenu() {
-    return Container(
+    return GestureDetector(
+      onTap: ,
+    child: Container(
       alignment: Alignment.centerLeft,
       child: IconButton(
         onPressed: () {},
         icon: Icon(Icons.menu, color: Colors.white),
       ),
+    )
     );
   }
 
