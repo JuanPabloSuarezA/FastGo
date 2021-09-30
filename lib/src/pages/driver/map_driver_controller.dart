@@ -57,6 +57,7 @@ class MapDriverController {
         _driverProvider.GetIDStream(_authProvider.getUser().uid);
     driverStream.listen((DocumentSnapshot document) {
       driver = Driver.fromJson(document.data());
+      refresh();
     });
   }
 
