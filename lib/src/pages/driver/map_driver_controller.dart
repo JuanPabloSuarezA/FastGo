@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'package:fast_go/src/providers/geofire_provide.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart' as location;
 import 'package:fast_go/src/utils/snackb.dart' as utils;
+import 'package:fast_go/src/providers/geofire_provide.dart';
 
 class MapDriverController {
   BuildContext context;
@@ -20,6 +22,7 @@ class MapDriverController {
   Position _position;
   StreamSubscription<Position> _positionStream;
   BitmapDescriptor MDriver;
+  GeoFireProvider _geoFireProvider;
 
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
@@ -89,13 +92,12 @@ class MapDriverController {
         markerId: id,
         icon: iicon,
         position: LatLng(lat, lng),
-        infoWindow: InfoWindow(title: title, snippet: content)
+        infoWindow: InfoWindow(title: title, snippet: content),
         draggable: false,
         zIndex: 2,
         flat: true,
-        anchor: Offset(0.5,0.5),
-        rotation: _position.heading
-        );
+        anchor: Offset(0.5, 0.5),
+        rotation: _position.heading);
     markers[id] = marker;
   }
 
