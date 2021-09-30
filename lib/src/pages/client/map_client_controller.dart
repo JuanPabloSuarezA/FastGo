@@ -17,6 +17,7 @@ import 'package:fast_go/src/providers/driver_provider.dart';
 import 'package:fast_go/src/providers/client_provider.dart';
 import 'package:fast_go/src/models/driver.dart';
 import 'package:fast_go/src/models/client.dart';
+import 'package:fast_go/src/utils/app_dialog.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class MapClientController {
@@ -51,7 +52,8 @@ class MapClientController {
     _geoFireProvider = new GeoFireProvider();
     _authProvider = new AuthProvider();
     _driverProvider = new DriverProvider();
-    _progressDialog = ProgressDialog(context);
+    _clientProvider = new ClientProvider();
+    _progressDialog = FGDialog.createProgressDialog(context, "Cargando...");
     MDriver = await CTimg('assets/img/icon_car.png');
 
     checkGPS();
@@ -59,8 +61,8 @@ class MapClientController {
   }
 
   void getclientInfo() {
-    Stream<DocumentSnapshot> clientStream =
-        _clientProvider.GetIDStream(_authProvider.getUser().uid);
+    Stream<DocumentSnapshot> clientStream;
+    clientStream = _clientProvider.getIDStream(_authProvider.getUser().uid);
     _clientinfoSub = clientStream.listen((DocumentSnapshot document) {
       client = Client.fromJson(document.data());
       refresh();

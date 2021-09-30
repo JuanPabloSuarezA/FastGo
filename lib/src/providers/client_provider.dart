@@ -23,7 +23,7 @@ class ClientProvider {
     }
   }
 
-  Stream<DocumentSnapshot> GetIDStream(String id) {
+  Stream<DocumentSnapshot> getIDStream(String id) {
     return _ref.doc(id).snapshots(includeMetadataChanges: true);
   }
 

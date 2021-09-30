@@ -14,6 +14,7 @@ import 'package:fast_go/src/providers/auth_provider.dart';
 import 'package:fast_go/src/providers/driver_provider.dart';
 import 'package:fast_go/src/models/driver.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:fast_go/src/utils/app_dialog.dart';
 
 class MapDriverController {
   BuildContext context;
@@ -46,7 +47,7 @@ class MapDriverController {
     _geoFireProvider = new GeoFireProvider();
     _authProvider = new AuthProvider();
     _driverProvider = new DriverProvider();
-    _progressDialog = ProgressDialog(context);
+    _progressDialog = FGDialog.createProgressDialog(context, "Cargando...");
     MDriver = await CTimg('assets/img/icon_car.png');
 
     checkGPS();
@@ -55,7 +56,7 @@ class MapDriverController {
 
   void getdriverInfo() {
     Stream<DocumentSnapshot> driverStream =
-        _driverProvider.GetIDStream(_authProvider.getUser().uid);
+        _driverProvider.getIDStream(_authProvider.getUser().uid);
     _driverinfoSub = driverStream.listen((DocumentSnapshot document) {
       driver = Driver.fromJson(document.data());
       refresh();
@@ -140,9 +141,11 @@ class MapDriverController {
         animateCameraToPosition(_position.latitude, _position.longitude);
         saveLocation();
         refresh();
+        _progressDialog.hide();
       });
     } catch (error) {
       print('Error en la localizacion: $error');
+      _progressDialog.hide();
     }
   }
 
