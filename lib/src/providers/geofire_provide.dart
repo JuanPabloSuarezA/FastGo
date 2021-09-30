@@ -12,6 +12,10 @@ class GeoFireProvider {
     _geo = Geoflutterfire();
   }
 
+  Stream<DocumentSnapshot> getlocationID(String id) {
+    return _ref.doc(id).snapshots(includeMetadataChanges: true);
+  }
+
   Future<Void> create(String id, double lat, double lng) {
     GeoFirePoint mylocation = _geo.point(latitude: lat, longitude: lng);
     return _ref
