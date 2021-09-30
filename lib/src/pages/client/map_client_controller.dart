@@ -73,36 +73,6 @@ class MapClientController {
     _mapController.complete(controller);
   }
 
-  void connect() {
-    if (isConnect) {
-      //isConnect = false;
-      disconnect();
-    } else {
-      _progressDialog.show();
-      //isConnect = true;
-      updateLocation();
-    }
-  }
-
-  void disconnect() {
-    _positionStream?.cancel();
-    _geoFireProvider.delete(_authProvider.getUser().uid);
-  }
-
-  void checkConnect() {
-    Stream<DocumentSnapshot> status =
-        _geoFireProvider.getlocationID(_authProvider.getUser().uid);
-
-    statusub = status.listen((DocumentSnapshot document) {
-      if (document.exists) {
-        isConnect = true;
-      } else {
-        isConnect = false;
-      }
-      refresh();
-    });
-  }
-
   void OpenMenu() {
     key.currentState.openDrawer();
   }
@@ -189,13 +159,12 @@ class MapClientController {
     if (isLocation) {
       print('GPS activado');
       updateLocation();
-      checkConnect();
     } else {
       print('GPS Desactivado');
       bool locationGPS = await location.Location().requestService();
       if (locationGPS) {
         updateLocation();
-        checkConnect();
+
         print('GPS activado');
       }
     }
