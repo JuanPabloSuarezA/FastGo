@@ -23,6 +23,10 @@ class DriverProvider {
     }
   }
 
+  Stream<DocumentSnapshot> GetIDStream(String id) {
+    return _ref.doc(id).snapshots(includeMetadataChanges: true);
+  }
+
   Future<Driver> getDriverWithId(String id) async {
     DocumentSnapshot doc = await _ref.doc(id).get();
 
