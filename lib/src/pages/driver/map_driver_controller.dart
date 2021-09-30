@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_go/src/providers/auth_provider.dart';
 import 'package:fast_go/src/providers/geofire_provide.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +7,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart' as location;
 import 'package:fast_go/src/utils/snackb.dart' as utils;
+import 'package:fast_go/src/utils/app_dialog.dart';
 import 'package:fast_go/src/providers/geofire_provide.dart';
 import 'package:fast_go/src/providers/auth_provider.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 class MapDriverController {
   BuildContext context;
@@ -28,12 +31,14 @@ class MapDriverController {
   AuthProvider _authProvider;
 
   bool isConnect = false;
+  ProgressDialog _progressDialog;
 
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
     this.refresh = refresh;
     _geoFireProvider = new GeoFireProvider();
     _authProvider = new AuthProvider();
+    _progressDialog = ProgressDialog(context);
     MDriver = await CTimg('assets/img/icon_car.png');
 
     checkGPS();
@@ -48,14 +53,16 @@ class MapDriverController {
   void saveLocation() async {
     await _geoFireProvider.create(
         _authProvider.getUser().uid, _position.latitude, _position.longitude);
+    _progressDialog.hide();
   }
 
   void connect() {
     if (isConnect) {
-      isConnect = false;
+      //isConnect = false;
       disconnect();
     } else {
-      isConnect = true;
+      _progressDialog.show();
+      //isConnect = true;
       updateLocation();
     }
   }
@@ -63,6 +70,20 @@ class MapDriverController {
   void disconnect() {
     _positionStream?.cancel();
     _geoFireProvider.delete(_authProvider.getUser().uid);
+  }
+
+  void checkConnect() {
+    Stream<DocumentSnapshot> status =
+        _geoFireProvider.getlocationID(_authProvider.getUser().uid);
+
+    status.listen((DocumentSnapshot document) {
+      if (document.exists) {
+        isConnect = true;
+      } else {
+        isConnect = false;
+      }
+      refresh();
+    });
   }
 
   void updateLocation() async {
@@ -137,11 +158,13 @@ class MapDriverController {
     if (isLocation) {
       print('GPS activado');
       updateLocation();
+      checkConnect();
     } else {
       print('GPS Desactivado');
       bool locationGPS = await location.Location().requestService();
       if (locationGPS) {
         updateLocation();
+        checkConnect();
         print('GPS activado');
       }
     }
