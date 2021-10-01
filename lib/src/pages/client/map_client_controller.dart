@@ -86,10 +86,10 @@ class MapClientController {
     isfrom = !isfrom;
     if (isfrom) {
       utils.Snackb.showSnackb(
-          context, 'Estas seleccionando el lugar de recogidas');
+          context, 'Estas seleccionando el lugar de recogida.');
     } else {
       utils.Snackb.showSnackb(
-          context, 'Estas seleccionando el lugar de destino');
+          context, 'Estas seleccionando el lugar de destino.');
     }
   }
 
