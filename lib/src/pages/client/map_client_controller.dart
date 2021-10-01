@@ -82,6 +82,17 @@ class MapClientController {
     _mapController.complete(controller);
   }
 
+  void changefromTO() {
+    isfrom = !isfrom;
+    if (isfrom) {
+      utils.Snackb.showSnackb(
+          context, 'Estas seleccionando el lugar de recogida');
+    } else {
+      utils.Snackb.showSnackb(
+          context, 'Estas seleccionando el lugar de destino');
+    }
+  }
+
   Future<Null> setlocationInfo() async {
     if (initialPosition != null) {
       double lat = initialPosition.target.latitude;

@@ -132,7 +132,7 @@ class _mapClientState extends State<MapClient> {
 
   Widget _btnHasta() {
     return GestureDetector(
-        onTap: _con.centerPosition,
+        onTap: _con.changefromTO,
         child: Container(
           alignment: Alignment.centerLeft,
           margin: EdgeInsets.symmetric(horizontal: 5),
@@ -203,7 +203,7 @@ class _mapClientState extends State<MapClient> {
                 height: 5,
               ),
               Text(
-                'Hasta',
+                _con.to ?? '',
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 14,
