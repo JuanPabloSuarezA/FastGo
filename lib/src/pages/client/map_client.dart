@@ -1,6 +1,7 @@
 import 'package:fast_go/src/widgets/button_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:fast_go/src/pages/client/map_client_controller.dart';
 
@@ -40,8 +41,12 @@ class _mapClientState extends State<MapClient> {
           SafeArea(
             child: Column(
               children: [
-               _btnMenu(), _cardGoogle(), _btnPosition(),
-
+                _btnMenu(),
+                _cardGoogle(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [_btnHasta(), _btnPosition()],
+                ),
                 Expanded(child: Container()),
                 _btnRequest()
               ],
@@ -125,6 +130,27 @@ class _mapClientState extends State<MapClient> {
     );
   }
 
+  Widget _btnHasta() {
+    return GestureDetector(
+        onTap: _con.centerPosition,
+        child: Container(
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.symmetric(horizontal: 5),
+          child: Card(
+              shape: CircleBorder(),
+              color: Colors.white,
+              elevation: 4.0,
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: Icon(
+                  Icons.refresh_outlined,
+                  color: Colors.blue,
+                  size: 20,
+                ),
+              )),
+        ));
+  }
+
   Widget _btnPosition() {
     return GestureDetector(
         onTap: _con.centerPosition,
@@ -148,30 +174,35 @@ class _mapClientState extends State<MapClient> {
 
   Widget _cardGoogle() {
     return Container(
-      width: MediaQuery.of(context).size.width*0.7,
+      width: MediaQuery.of(context).size.width * 0.7,
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Desde',
+                _con.from ?? '',
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 14,
                     fontWeight: FontWeight.bold),
                 maxLines: 2,
               ),
+              SizedBox(
+                height: 5,
+              ),
               Container(
-                width: ,
-                child: Divider(color: Colors.grey,height: 10,
+                child: Divider(
+                  color: Colors.grey,
+                  height: 10,
                 ),
-                
-                ),
-                SizedBox(height: 5,)
-                Text(
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
                 'Hasta',
                 style: TextStyle(
                     color: Colors.black,
@@ -218,6 +249,12 @@ class _mapClientState extends State<MapClient> {
       myLocationButtonEnabled: false,
       myLocationEnabled: false,
       markers: Set<Marker>.of(_con.markers.values),
+      onCameraMove: (position) {
+        _con.initialPosition = position;
+      },
+      onCameraIdle: () async {
+        await _con.setlocationInfo();
+      },
     );
   }
 
