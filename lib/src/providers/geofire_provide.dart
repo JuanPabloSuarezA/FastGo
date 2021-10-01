@@ -12,6 +12,15 @@ class GeoFireProvider {
     _geo = Geoflutterfire();
   }
 
+  Stream<List<DocumentSnapshot>> conductoresCercanos(
+      double lat, double lng, double radius) {
+    GeoFirePoint center = _geo.point(latitude: lat, longitude: lng);
+
+    return _geo
+        .collection(collectionRef: _ref.where('status', isEqualTo: 'available'))
+        .within(center: center, radius: radius, field: 'position');
+  }
+
   Stream<DocumentSnapshot> getlocationID(String id) {
     return _ref.doc(id).snapshots(includeMetadataChanges: true);
   }
