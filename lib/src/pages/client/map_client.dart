@@ -6,10 +6,10 @@ import 'package:fast_go/src/pages/client/map_client_controller.dart';
 
 class MapClient extends StatefulWidget {
   @override
-  _MapClientState createState() => _MapClientState();
+  _mapClientState createState() => _mapClientState();
 }
 
-class _MapClientState extends State<MapClient> {
+class _mapClientState extends State<MapClient> {
   MapClientController _con = new MapClientController();
 
   @override
@@ -33,7 +33,7 @@ class _MapClientState extends State<MapClient> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _con.key,
-      drawer: _MenuBurger(),
+      drawer: _menuBurger(),
       body: Stack(
         children: [
           _googleMapsWidget(),
@@ -42,19 +42,31 @@ class _MapClientState extends State<MapClient> {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [_btnMenu(), _btnPosition()],
+                  children: [_btnMenu(), _cardGoogle(), _btnPosition()],
                 ),
                 Expanded(child: Container()),
                 _btnRequest()
               ],
             ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: _iconLocacion(),
           )
         ],
       ),
     );
   }
 
-  Widget _MenuBurger() {
+  Widget _iconLocacion() {
+    return Image.asset(
+      'assets/img/my_location.png',
+      width: 65,
+      height: 65,
+    );
+  }
+
+  Widget _menuBurger() {
     return Drawer(
       child: ListView(
         children: [
@@ -108,7 +120,7 @@ class _MapClientState extends State<MapClient> {
             title: Text('Cerrar Sesion'),
             trailing: Icon(Icons.power_settings_new),
             // leading: Icon(Icons.cancel),
-            onTap: _con.Singout,
+            onTap: _con.singout,
           ),
         ],
       ),
@@ -117,7 +129,7 @@ class _MapClientState extends State<MapClient> {
 
   Widget _btnPosition() {
     return GestureDetector(
-        onTap: _con.CenterPosition,
+        onTap: _con.centerPosition,
         child: Container(
           alignment: Alignment.centerRight,
           margin: EdgeInsets.symmetric(horizontal: 5),
@@ -136,11 +148,50 @@ class _MapClientState extends State<MapClient> {
         ));
   }
 
+  Widget _cardGoogle() {
+    return Container(
+      width: MediaQuery.of(context).size.width*0.7,
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Desde',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
+                maxLines: 2,
+              ),
+              Container(
+                width: ,
+                child: Divider(color: Colors.grey,height: 10,
+                ),
+                
+                ),
+                Text(
+                'Hasta',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
+                maxLines: 2,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _btnMenu() {
     return Container(
       alignment: Alignment.centerLeft,
       child: IconButton(
-        onPressed: _con.OpenMenu,
+        onPressed: _con.openMenu,
         icon: Icon(Icons.menu, color: Colors.white),
       ),
     );

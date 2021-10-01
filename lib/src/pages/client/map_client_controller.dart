@@ -54,7 +54,7 @@ class MapClientController {
     _driverProvider = new DriverProvider();
     _clientProvider = new ClientProvider();
     _progressDialog = FGDialog.createProgressDialog(context, "Cargando...");
-    MDriver = await CTimg('assets/img/icon_car.png');
+    MDriver = await cTimg('assets/img/my_location_yellow.png  ');
 
     checkGPS();
     getclientInfo();
@@ -75,8 +75,33 @@ class MapClientController {
     _mapController.complete(controller);
   }
 
-  void OpenMenu() {
+  void openMenu() {
     key.currentState.openDrawer();
+  }
+
+  void getConductores() {
+    Stream<List<DocumentSnapshot>> stream = _geoFireProvider
+        .conductoresCercanos(_position.latitude, _position.longitude, 10);
+    stream.listen((List<DocumentSnapshot> documentList) {
+      for (MarkerId m in markers.keys) {
+        bool remove = true;
+        for (DocumentSnapshot d in documentList) {
+          if (m.value == d.id) {
+            remove = false;
+          }
+        }
+        if (remove) {
+          markers.remove(m);
+          refresh();
+        }
+      }
+      for (DocumentSnapshot d in documentList) {
+        GeoPoint point = d.data()['position']['geopoint'];
+        marcador(d.id, point.latitude, point.longitude, 'conductor disponible',
+            'content', MDriver);
+      }
+      refresh();
+    });
   }
 
   void dismiss() {
@@ -85,7 +110,7 @@ class MapClientController {
     _clientinfoSub?.cancel();
   }
 
-  void Singout() async {
+  void singout() async {
     await _authProvider.logOut();
     Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
   }
@@ -93,30 +118,15 @@ class MapClientController {
   void updateLocation() async {
     try {
       await _determinePosition();
-      _position = await Geolocator.getLastKnownPosition();
-      CenterPosition();
-
-      marcador('driver', _position.latitude, _position.longitude,
-          'tu ubicacion', '', MDriver);
-      refresh();
-
-      _positionStream = Geolocator.getPositionStream(
-              desiredAccuracy: LocationAccuracy.best, distanceFilter: 1)
-          .listen((Position position) {
-        _position = position;
-        marcador('driver', _position.latitude, _position.longitude,
-            'tu ubicacion', '', MDriver);
-
-        animateCameraToPosition(_position.latitude, _position.longitude);
-
-        refresh();
-      });
+      _position = await Geolocator.getLastKnownPosition(); //una sola vez
+      centerPosition();
+      getConductores();
     } catch (error) {
       print('Error en la localizacion: $error');
     }
   }
 
-  void CenterPosition() {
+  void centerPosition() {
     if (_position != null) {
       animateCameraToPosition(_position.latitude, _position.longitude);
     } else {
@@ -129,11 +139,11 @@ class MapClientController {
     GoogleMapController controller = await _mapController.future;
     if (controller != null) {
       controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-          bearing: 0, target: LatLng(latitude, longitude), zoom: 17)));
+          bearing: 0, target: LatLng(latitude, longitude), zoom: 14)));
     }
   }
 
-  Future<BitmapDescriptor> CTimg(String path) async {
+  Future<BitmapDescriptor> cTimg(String path) async {
     ImageConfiguration configuration = ImageConfiguration();
     BitmapDescriptor bitmapDescriptor =
         await BitmapDescriptor.fromAssetImage(configuration, path);
