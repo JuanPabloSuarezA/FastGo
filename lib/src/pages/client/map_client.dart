@@ -40,10 +40,8 @@ class _mapClientState extends State<MapClient> {
           SafeArea(
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [_btnMenu(), _cardGoogle(), _btnPosition()],
-                ),
+               _btnMenu(), _cardGoogle(), _btnPosition(),
+
                 Expanded(child: Container()),
                 _btnRequest()
               ],
@@ -172,6 +170,7 @@ class _mapClientState extends State<MapClient> {
                 ),
                 
                 ),
+                SizedBox(height: 5,)
                 Text(
                 'Hasta',
                 style: TextStyle(
