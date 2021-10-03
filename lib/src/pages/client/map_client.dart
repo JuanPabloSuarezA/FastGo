@@ -182,14 +182,9 @@ class _mapClientState extends State<MapClient> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                _con.from ?? '',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold),
-                maxLines: 2,
-              ),
+              _infocardlocation('desde', _con.from ?? '', () async {
+                await _con.showgoogleAutocomplete(true);
+              }),
               SizedBox(
                 height: 5,
               ),
@@ -202,17 +197,32 @@ class _mapClientState extends State<MapClient> {
               SizedBox(
                 height: 5,
               ),
-              Text(
-                _con.to ?? '',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold),
-                maxLines: 2,
-              ),
+              _infocardlocation('Hasta', _con.to ?? '', () async {
+                await _con.showgoogleAutocomplete(false);
+              }),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _infocardlocation(String title, String value, Function function) {
+    return GestureDetector(
+      onTap: function,
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: TextStyle(color: Colors.grey, fontSize: 10),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+                color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+            maxLines: 2,
+          ),
+        ],
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fast_go/src/api/enviroment.dart';
 import 'package:fast_go/src/models/client.dart';
 import 'package:fast_go/src/models/driver.dart';
 import 'package:fast_go/src/providers/auth_provider.dart';
@@ -18,9 +19,12 @@ import 'package:fast_go/src/providers/client_provider.dart';
 import 'package:fast_go/src/models/driver.dart';
 import 'package:fast_go/src/models/client.dart';
 import 'package:fast_go/src/utils/app_dialog.dart';
+import 'package:fast_go/src/api/enviroment.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:google_maps_webservice/places.dart' as places;
+import 'package:flutter_google_places/flutter_google_places.dart';
 
 class MapClientController {
   BuildContext context;
@@ -52,6 +56,8 @@ class MapClientController {
   String to;
   LatLng tolatlng;
   bool isfrom = true;
+  places.GoogleMapsPlaces _places =
+      places.GoogleMapsPlaces(apiKey: enviroment.API_KEY_MAPS);
 
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
@@ -90,6 +96,33 @@ class MapClientController {
     } else {
       utils.Snackb.showSnackb(
           context, 'Estas seleccionando el lugar de destino.');
+    }
+  }
+
+  Future<Null> showgoogleAutocomplete(bool isFrom) async {
+    places.Prediction p = await PlacesAutocomplete.show(
+        context: context, apiKey: enviroment.API_KEY_MAPS, language: 'es');
+    if (p != null) {
+      places.PlacesDetailsResponse detail =
+          await _places.getDetailsByPlaceId(p.placeId, language: 'es');
+
+      double lat = detail.result.geometry.location.lat;
+      double lng = detail.result.geometry.location.lng;
+
+      List<Address> address =
+          await Geocoder.local.findAddressesFromQuery(p.description);
+      if (address != null) {
+        if (address.length > 0) {
+          if (detail != null) {
+            String direction = detail.result.name;
+            String city = address[0].locality;
+            String department = address[0].adminArea;
+
+            from = '$direction,$city,$department';
+            fromlatlong = new LatLng(lat, lng);
+          }
+        }
+      }
     }
   }
 

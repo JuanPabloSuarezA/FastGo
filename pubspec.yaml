@@ -35,6 +35,7 @@ dependencies:
   progress_dialog: ^1.2.0
   shared_preferences: ^0.5.12+4
   google_maps_flutter: ^1.0.6
+  flutter_google_places: ^0.2.6
   geolocator: ^6.1.13
   location: ^3.1.0
   geocoder: ^0.2.1
