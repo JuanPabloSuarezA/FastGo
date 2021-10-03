@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:fast_go/src/widgets/button_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -211,10 +213,12 @@ class _mapClientState extends State<MapClient> {
     return GestureDetector(
       onTap: function,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
             style: TextStyle(color: Colors.grey, fontSize: 10),
+            textAlign: TextAlign.start,
           ),
           Text(
             value,

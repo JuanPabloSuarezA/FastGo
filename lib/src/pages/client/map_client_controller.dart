@@ -117,9 +117,14 @@ class MapClientController {
             String direction = detail.result.name;
             String city = address[0].locality;
             String department = address[0].adminArea;
-
-            from = '$direction,$city,$department';
-            fromlatlong = new LatLng(lat, lng);
+            if (isFrom) {
+              from = '$direction,$city,$department';
+              fromlatlong = new LatLng(lat, lng);
+            } else {
+              to = '$direction,$city,$department';
+              tolatlng = new LatLng(lat, lng);
+            }
+            refresh();
           }
         }
       }
