@@ -101,7 +101,13 @@ class MapClientController {
 
   Future<Null> showgoogleAutocomplete(bool isFrom) async {
     places.Prediction p = await PlacesAutocomplete.show(
-        context: context, apiKey: enviroment.API_KEY_MAPS, language: 'es');
+      context: context,
+      apiKey: enviroment.API_KEY_MAPS,
+      language: 'es',
+      strictbounds: true,
+      radius: 5000,
+      location: places.Location(7.1192899, -73.1679974),
+    );
     if (p != null) {
       places.PlacesDetailsResponse detail =
           await _places.getDetailsByPlaceId(p.placeId, language: 'es');
@@ -129,6 +135,10 @@ class MapClientController {
         }
       }
     }
+  }
+
+  void requestDriver() {
+    Navigator.pushNamed(context, 'client/travel');
   }
 
   Future<Null> setlocationInfo() async {

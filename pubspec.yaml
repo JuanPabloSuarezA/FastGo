@@ -41,6 +41,7 @@ dependencies:
   geocoder: ^0.2.1
   geoflutterfire: ^2.2.1
   geocoding: ^1.0.5
+  flutter_polyline_points: ^0.2.4
 
 dev_dependencies:
   flutter_test:

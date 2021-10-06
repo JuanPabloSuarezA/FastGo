@@ -1,5 +1,4 @@
-import 'dart:html';
-
+//import 'dart:html';
 import 'package:fast_go/src/widgets/button_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -184,7 +183,8 @@ class _mapClientState extends State<MapClient> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _infocardlocation('desde', _con.from ?? '', () async {
+              _infocardlocation('desde', _con.from ?? 'Lugar de recogida',
+                  () async {
                 await _con.showgoogleAutocomplete(true);
               }),
               SizedBox(
@@ -199,7 +199,8 @@ class _mapClientState extends State<MapClient> {
               SizedBox(
                 height: 5,
               ),
-              _infocardlocation('Hasta', _con.to ?? '', () async {
+              _infocardlocation('Hasta', _con.to ?? 'Lugar de destino',
+                  () async {
                 await _con.showgoogleAutocomplete(false);
               }),
             ],
@@ -247,7 +248,7 @@ class _mapClientState extends State<MapClient> {
       alignment: Alignment.bottomCenter,
       margin: EdgeInsets.symmetric(horizontal: 60, vertical: 30),
       child: ButtonApp(
-        onPressed: () {},
+        onPressed: _con.requestDriver,
         text: 'Solicitar Servicio',
         color: _con.isConnect ? Colors.red : Colors.blueAccent,
         textColor: Colors.white,
