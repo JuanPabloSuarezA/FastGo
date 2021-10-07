@@ -138,7 +138,17 @@ class MapClientController {
   }
 
   void requestDriver() {
-    Navigator.pushNamed(context, 'client/travel');
+    if (fromLatLgn != null && toLatLng != null) {
+      Navigator.pushNamed(context, 'client/travel', arguments: {
+        "from": from,
+        "to": to,
+        "fromLatLng": fromLatLgn,
+        "toLatLng": toLatLng,
+      });
+    } else {
+      utils.Snackb.showSnackb(
+          context, "Selecciona lugar de recogida y destino");
+    }
   }
 
   Future<Null> setlocationInfo() async {
