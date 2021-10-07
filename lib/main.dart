@@ -1,4 +1,5 @@
 import 'package:fast_go/src/pages/client/map_client.dart';
+import 'package:fast_go/src/pages/client/request_travel_client.dart';
 import 'package:fast_go/src/pages/driver/d_register_page.dart';
 import 'package:fast_go/src/pages/driver/map_driver.dart';
 import 'package:fast_go/src/pages/login/login_page.dart';
@@ -11,6 +12,7 @@ import 'package:fast_go/src/utils/colors.dart' as util;
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fast_go/src/pages/client/request_travel_client.dart';
 
 void main() async {
   LicenseRegistry.addLicense(() async* {
@@ -43,6 +45,7 @@ class _MyAppState extends State<MyApp> {
         "driver/map": (context) => MapDriver(),
         "client/map": (context) => MapClient(),
         "client/travel": (context) => TravelClient(),
+        "client/request": (context) => RequestTravelClientPage(),
       },
       theme: ThemeData(
           textTheme: GoogleFonts.nobileTextTheme(

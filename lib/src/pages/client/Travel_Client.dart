@@ -106,7 +106,7 @@ class TravelClientState extends State<TravelClient> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 30),
             child: ButtonApp(
-              onPressed: () {},
+              onPressed: _con.goToRequest,
               text: 'CONFIRMAR',
               textColor: Colors.white,
               color: Colors.blue,

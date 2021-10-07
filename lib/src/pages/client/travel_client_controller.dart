@@ -77,6 +77,15 @@ class TravelClientController {
     refresh();
   }
 
+  void goToRequest() {
+    Navigator.pushNamed(context, 'client/request', arguments: {
+      "from": from,
+      "to": to,
+      "fromLatLng": fromLatLng,
+      "toLatLng": toLatLng,
+    });
+  }
+
   void calculatePrice() async {
     Prices prices = await _pricesProvider.getAll();
     double kmValue = double.parse(km.split(" ")[0]) * prices.km;
