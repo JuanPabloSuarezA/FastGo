@@ -64,7 +64,7 @@ class _mapClientState extends State<MapClient> {
 
   Widget _iconLocacion() {
     return Image.asset(
-      'assets/img/my_location.png',
+      'assets/img/my_location_blue.png',
       width: 65,
       height: 65,
     );

@@ -52,12 +52,12 @@ class MapClientController {
 
   Client client;
   String from;
-  LatLng fromlatlong;
+  LatLng fromLatLgn;
   String to;
-  LatLng tolatlng;
+  LatLng toLatLng;
   bool isfrom = true;
   places.GoogleMapsPlaces _places =
-      places.GoogleMapsPlaces(apiKey: enviroment.API_KEY_MAPS);
+      places.GoogleMapsPlaces(apiKey: Enviroment.API_KEY_MAPS);
 
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
@@ -67,7 +67,7 @@ class MapClientController {
     _driverProvider = new DriverProvider();
     _clientProvider = new ClientProvider();
     _progressDialog = FGDialog.createProgressDialog(context, "Cargando...");
-    MDriver = await cTimg('assets/img/my_location_yellow.png  ');
+    MDriver = await cTimg('assets/img/my_location_blue.png  ');
 
     checkGPS();
     getclientInfo();
@@ -102,7 +102,7 @@ class MapClientController {
   Future<Null> showgoogleAutocomplete(bool isFrom) async {
     places.Prediction p = await PlacesAutocomplete.show(
       context: context,
-      apiKey: enviroment.API_KEY_MAPS,
+      apiKey: Enviroment.API_KEY_MAPS,
       language: 'es',
       strictbounds: true,
       radius: 5000,
@@ -125,10 +125,10 @@ class MapClientController {
             String department = address[0].adminArea;
             if (isFrom) {
               from = '$direction,$city,$department';
-              fromlatlong = new LatLng(lat, lng);
+              fromLatLgn = new LatLng(lat, lng);
             } else {
               to = '$direction,$city,$department';
-              tolatlng = new LatLng(lat, lng);
+              toLatLng = new LatLng(lat, lng);
             }
             refresh();
           }
@@ -138,7 +138,17 @@ class MapClientController {
   }
 
   void requestDriver() {
-    Navigator.pushNamed(context, 'client/travel');
+    if (fromLatLgn != null && toLatLng != null) {
+      Navigator.pushNamed(context, 'client/travel', arguments: {
+        "from": from,
+        "to": to,
+        "fromLatLng": fromLatLgn,
+        "toLatLng": toLatLng,
+      });
+    } else {
+      utils.Snackb.showSnackb(
+          context, "Selecciona lugar de recogida y destino");
+    }
   }
 
   Future<Null> setlocationInfo() async {
@@ -157,10 +167,10 @@ class MapClientController {
 
           if (isfrom) {
             from = '$direction #$street,$city, $department';
-            fromlatlong = new LatLng(lat, lng);
+            fromLatLgn = new LatLng(lat, lng);
           } else {
             to = '$direction #$street,$city, $department';
-            tolatlng = new LatLng(lat, lng);
+            toLatLng = new LatLng(lat, lng);
           }
 
           refresh();

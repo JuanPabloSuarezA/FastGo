@@ -10,7 +10,7 @@ class GoogleProvider {
     print('SE ESTA EJECUTANDO');
 
     Uri uri = Uri.https('maps.googleapis.com', 'maps/api/directions/json', {
-      'key': enviroment.API_KEY_MAPS,
+      'key': Enviroment.API_KEY_MAPS,
       'origin': '$fromLat,$fromLng',
       'destination': '$toLat,$toLng',
       'traffic_model': 'best_guess',

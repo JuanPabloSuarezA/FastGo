@@ -8,7 +8,7 @@ import 'package:fast_go/src/models/prices.dart';
 import 'package:fast_go/src/providers/google_provider.dart';
 import 'package:fast_go/src/providers/prices_provider.dart';
 
-class Travel_client_controller {
+class TravelClientController {
   BuildContext context;
 
   GoogleProvider _googleProvider;
@@ -44,6 +44,9 @@ class Travel_client_controller {
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
     this.refresh = refresh;
+    for (var i = 0; i < 10; i++) {
+      print("AQUI");
+    }
 
     Map<String, dynamic> arguments =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
@@ -93,7 +96,7 @@ class Travel_client_controller {
         PointLatLng(toLatLng.latitude, toLatLng.longitude);
 
     PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-        enviroment.API_KEY_MAPS, pointFromLatLng, pointToLatLng);
+        Enviroment.API_KEY_MAPS, pointFromLatLng, pointToLatLng);
 
     for (PointLatLng point in result.points) {
       points.add(LatLng(point.latitude, point.longitude));
@@ -101,7 +104,7 @@ class Travel_client_controller {
 
     Polyline polyline = Polyline(
         polylineId: PolylineId('poly'),
-        color: Colors.amber,
+        color: Colors.cyanAccent,
         points: points,
         width: 6);
 
