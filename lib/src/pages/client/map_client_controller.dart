@@ -52,9 +52,9 @@ class MapClientController {
 
   Client client;
   String from;
-  LatLng fromlatlong;
+  LatLng fromLatLgn;
   String to;
-  LatLng tolatlng;
+  LatLng toLatLng;
   bool isfrom = true;
   places.GoogleMapsPlaces _places =
       places.GoogleMapsPlaces(apiKey: enviroment.API_KEY_MAPS);
@@ -125,10 +125,10 @@ class MapClientController {
             String department = address[0].adminArea;
             if (isFrom) {
               from = '$direction,$city,$department';
-              fromlatlong = new LatLng(lat, lng);
+              fromLatLgn = new LatLng(lat, lng);
             } else {
               to = '$direction,$city,$department';
-              tolatlng = new LatLng(lat, lng);
+              toLatLng = new LatLng(lat, lng);
             }
             refresh();
           }
@@ -157,10 +157,10 @@ class MapClientController {
 
           if (isfrom) {
             from = '$direction #$street,$city, $department';
-            fromlatlong = new LatLng(lat, lng);
+            fromLatLgn = new LatLng(lat, lng);
           } else {
             to = '$direction #$street,$city, $department';
-            tolatlng = new LatLng(lat, lng);
+            toLatLng = new LatLng(lat, lng);
           }
 
           refresh();

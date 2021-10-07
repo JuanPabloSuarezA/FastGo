@@ -1,25 +1,32 @@
-import 'package:fast_go/src/pages/client/travel_client_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:fast_go/src/pages/client/travel_client_controller.dart';
 import 'package:fast_go/src/widgets/button_app.dart';
 
-class Travel_Client extends StatefulWidget {
+class TravelClient extends StatefulWidget {
   @override
-  _Travel_ClientState createState() => _Travel_ClientState();
+  TravelClientState createState() => TravelClientState();
 }
 
-class _Travel_ClientState extends State<Travel_Client> {
-  Travel_client_controller _con = new Travel_client_controller();
+class TravelClientState extends State<TravelClient> {
+  TravelClientController _con = new TravelClientController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    // _con.init(context, refresh);
+
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      print("INICIALIZANDO");
+
       _con.init(context, refresh);
     });
+  }
+
+  Widget nada() {
+    return Text("Prueba");
   }
 
   @override
