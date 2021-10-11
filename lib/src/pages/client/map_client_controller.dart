@@ -6,6 +6,7 @@ import 'package:fast_go/src/models/driver.dart';
 import 'package:fast_go/src/providers/auth_provider.dart';
 import 'package:fast_go/src/providers/client_provider.dart';
 import 'package:fast_go/src/providers/geofire_provide.dart';
+import 'package:fast_go/src/providers/push_notifications_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -49,6 +50,7 @@ class MapClientController {
   StreamSubscription<DocumentSnapshot> _clientinfoSub;
   bool isConnect = false;
   ProgressDialog _progressDialog;
+  PushNotificationsProvider _pushNotificationsProvider;
 
   Client client;
   String from;
@@ -68,8 +70,10 @@ class MapClientController {
     _clientProvider = new ClientProvider();
     _progressDialog = FGDialog.createProgressDialog(context, "Cargando...");
     MDriver = await cTimg('assets/img/my_location_blue.png  ');
+    _pushNotificationsProvider = new PushNotificationsProvider();
 
     checkGPS();
+    saveToken();
     getclientInfo();
   }
 
@@ -284,6 +288,10 @@ class MapClientController {
         print('GPS activado');
       }
     }
+  }
+
+  void saveToken() {
+    _pushNotificationsProvider.saveToken(_authProvider.getUser().uid, "client");
   }
 
   Future<Position> _determinePosition() async {

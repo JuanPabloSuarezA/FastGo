@@ -2,9 +2,11 @@ import 'package:fast_go/src/pages/client/map_client.dart';
 import 'package:fast_go/src/pages/client/request_travel_client.dart';
 import 'package:fast_go/src/pages/driver/d_register_page.dart';
 import 'package:fast_go/src/pages/driver/map_driver.dart';
+import 'package:fast_go/src/pages/driver/travel_request/d_travel_request_page.dart';
 import 'package:fast_go/src/pages/login/login_page.dart';
 import 'package:fast_go/src/pages/client/c_register_page.dart';
 import 'package:fast_go/src/pages/client/travel_client.dart';
+import 'package:fast_go/src/providers/push_notifications_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fast_go/src/pages/home/home_page.dart';
@@ -31,10 +33,30 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    PushNotificationsProvider pushNotificationsProvider =
+        new PushNotificationsProvider();
+    pushNotificationsProvider.initPushNotifications();
+
+    pushNotificationsProvider.message.listen((data) {
+      print("-----------NOTIFICACIÓN-------------");
+      print(data);
+      navigatorKey.currentState
+          .pushNamed("driver/travel/request", arguments: data);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Fast Go",
+      navigatorKey: navigatorKey,
       initialRoute: "home",
       debugShowCheckedModeBanner: false,
       routes: {
@@ -43,6 +65,7 @@ class _MyAppState extends State<MyApp> {
         "client/register": (context) => ClientRegisterPage(),
         "driver/register": (context) => DriverRegisterPage(),
         "driver/map": (context) => MapDriver(),
+        "driver/travel/request": (context) => DriverTravelRequestPage(),
         "client/map": (context) => MapClient(),
         "client/travel": (context) => TravelClient(),
         "client/request": (context) => RequestTravelClientPage(),

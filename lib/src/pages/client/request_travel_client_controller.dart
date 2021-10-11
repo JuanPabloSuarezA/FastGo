@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fast_go/src/models/driver.dart';
+import 'package:fast_go/src/providers/push_notifications_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:fast_go/src/models/travel_info.dart';
@@ -23,6 +25,7 @@ class RequestTravelClientController {
   AuthProvider _authProvider;
   DriverProvider _driverProvider;
   GeoFireProvider _geofireProvider;
+  PushNotificationsProvider _pushNotificationsProvider;
 
   List<String> nearbyDrivers = new List();
 
@@ -36,6 +39,7 @@ class RequestTravelClientController {
     _authProvider = new AuthProvider();
     _driverProvider = new DriverProvider();
     _geofireProvider = new GeoFireProvider();
+    _pushNotificationsProvider = new PushNotificationsProvider();
 
     Map<String, dynamic> arguments =
         ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
@@ -61,6 +65,8 @@ class RequestTravelClientController {
         print('CONDUCTOR ENCONTRADO ${d.id}');
         nearbyDrivers.add(d.id);
       }
+      getDriverInfo(nearbyDrivers[0]);
+      _streamSubscription?.cancel();
     });
   }
 
@@ -76,5 +82,22 @@ class RequestTravelClientController {
         status: 'created');
 
     await _travelInfoProvider.create(travelInfo);
+  }
+
+  Future<void> getDriverInfo(String idDriver) async {
+    Driver driver = await _driverProvider.getDriverWithId(idDriver);
+    _sendNotification(driver.token);
+  }
+
+  void _sendNotification(String token) {
+    Map<String, dynamic> data = {
+      'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+      'idClient': _authProvider.getUser().uid,
+      'origin': from,
+      'destination': to
+    };
+
+    _pushNotificationsProvider.sendMessage(
+        token, data, "FastGO", "Servicio solicitado por el cliente");
   }
 }

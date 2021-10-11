@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_go/src/models/driver.dart';
 import 'package:fast_go/src/providers/auth_provider.dart';
 import 'package:fast_go/src/providers/geofire_provide.dart';
+import 'package:fast_go/src/providers/push_notifications_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -38,6 +39,7 @@ class MapDriverController {
   StreamSubscription<DocumentSnapshot> _driverinfoSub;
   bool isConnect = false;
   ProgressDialog _progressDialog;
+  PushNotificationsProvider _pushNotificationsProvider;
 
   Driver driver;
 
@@ -49,8 +51,10 @@ class MapDriverController {
     _driverProvider = new DriverProvider();
     _progressDialog = FGDialog.createProgressDialog(context, "Cargando...");
     MDriver = await CTimg('assets/img/icon_car.png');
+    _pushNotificationsProvider = new PushNotificationsProvider();
 
     checkGPS();
+    saveToken();
     getdriverInfo();
   }
 
@@ -73,6 +77,10 @@ class MapDriverController {
     await _geoFireProvider.create(
         _authProvider.getUser().uid, _position.latitude, _position.longitude);
     _progressDialog.hide();
+  }
+
+  void saveToken() {
+    _pushNotificationsProvider.saveToken(_authProvider.getUser().uid, "driver");
   }
 
   void connect() {

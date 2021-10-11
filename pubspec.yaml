@@ -43,6 +43,8 @@ dependencies:
   geocoding: ^1.0.5
   flutter_polyline_points: ^0.2.4
   lottie: ^0.7.0+1
+  firebase_messaging: ^8.0.0-dev.14
+
 
 dev_dependencies:
   flutter_test:
