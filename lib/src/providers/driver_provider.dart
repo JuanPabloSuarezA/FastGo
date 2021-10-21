@@ -34,7 +34,6 @@ class DriverProvider {
 
     if (doc.exists) {
       driver = Driver.fromJson(doc.data());
-
       return driver;
     }
 

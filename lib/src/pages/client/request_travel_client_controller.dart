@@ -10,6 +10,7 @@ import 'package:fast_go/src/providers/auth_provider.dart';
 import 'package:fast_go/src/providers/driver_provider.dart';
 import 'package:fast_go/src/providers/geofire_provide.dart';
 import 'package:fast_go/src/providers/travel_info_provider.dart';
+import 'package:fast_go/src/utils/snackb.dart' as utils;
 
 class RequestTravelClientController {
   BuildContext context;
@@ -30,6 +31,7 @@ class RequestTravelClientController {
   List<String> nearbyDrivers = new List();
 
   StreamSubscription<List<DocumentSnapshot>> _streamSubscription;
+  StreamSubscription<DocumentSnapshot> _streamStatusSubscription;
 
   Future init(BuildContext context, Function refresh) {
     this.context = context;
@@ -52,8 +54,30 @@ class RequestTravelClientController {
     _getNearbyDrivers();
   }
 
+  void _checkDriverResponse() {
+    Stream<DocumentSnapshot> stream =
+        _travelInfoProvider.getByIdStream(_authProvider.getUser().uid);
+    _streamStatusSubscription = stream.listen((DocumentSnapshot document) {
+      TravelInfo travelInfo = TravelInfo.fromJson(document.data());
+
+      if (travelInfo.idDriver != null && travelInfo.status == 'accepted') {
+        Navigator.pushNamedAndRemoveUntil(
+            context, 'client/travel/map', (route) => false);
+        //Navigator.pushReplacementNamed(context, 'client/travel/map');
+      } else if (travelInfo.status == 'no_accepted') {
+        utils.Snackb.showSnackb(context, 'El conductor no acepto tu solicitud');
+
+        Future.delayed(Duration(milliseconds: 4000), () {
+          Navigator.pushNamedAndRemoveUntil(
+              context, 'client/map', (route) => false);
+        });
+      }
+    });
+  }
+
   void dispose() {
     _streamSubscription?.cancel();
+    _streamStatusSubscription?.cancel();
   }
 
   void _getNearbyDrivers() {
@@ -82,6 +106,7 @@ class RequestTravelClientController {
         status: 'created');
 
     await _travelInfoProvider.create(travelInfo);
+    _checkDriverResponse();
   }
 
   Future<void> getDriverInfo(String idDriver) async {
@@ -94,7 +119,7 @@ class RequestTravelClientController {
       'click_action': 'FLUTTER_NOTIFICATION_CLICK',
       'idClient': _authProvider.getUser().uid,
       'origin': from,
-      'destination': to
+      'destination': to,
     };
 
     _pushNotificationsProvider.sendMessage(

@@ -4,6 +4,7 @@ import 'package:fast_go/src/providers/client_provider.dart';
 import 'package:fast_go/src/providers/driver_provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PushNotificationsProvider {
   FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
@@ -24,7 +25,7 @@ class PushNotificationsProvider {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       Map<String, dynamic> data = message.data;
       print("OnResume: $data");
-      _streamController.sink.add(message);
+      _streamController.sink.add(data);
     });
   }
 

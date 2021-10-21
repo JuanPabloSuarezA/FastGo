@@ -1,6 +1,8 @@
+import 'package:fast_go/src/pages/client/c_travel_map_page.dart';
 import 'package:fast_go/src/pages/client/map_client.dart';
 import 'package:fast_go/src/pages/client/request_travel_client.dart';
 import 'package:fast_go/src/pages/driver/d_register_page.dart';
+import 'package:fast_go/src/pages/driver/d_travel_map_page.dart';
 import 'package:fast_go/src/pages/driver/map_driver.dart';
 import 'package:fast_go/src/pages/driver/travel_request/d_travel_request_page.dart';
 import 'package:fast_go/src/pages/login/login_page.dart';
@@ -66,9 +68,11 @@ class _MyAppState extends State<MyApp> {
         "driver/register": (context) => DriverRegisterPage(),
         "driver/map": (context) => MapDriver(),
         "driver/travel/request": (context) => DriverTravelRequestPage(),
+        "driver/travel/map": (context) => DriverTravelMap(),
         "client/map": (context) => MapClient(),
         "client/travel": (context) => TravelClient(),
         "client/request": (context) => RequestTravelClientPage(),
+        "client/travel/map": (context) => ClientTravelMap(),
       },
       theme: ThemeData(
           textTheme: GoogleFonts.nobileTextTheme(
