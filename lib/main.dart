@@ -16,7 +16,6 @@ import 'package:fast_go/src/utils/colors.dart' as util;
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fast_go/src/pages/client/request_travel_client.dart';
 
 void main() async {
   LicenseRegistry.addLicense(() async* {

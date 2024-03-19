@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "924994072715",
-    "project_id": "fast-go-fc83a",
-    "storage_bucket": "fast-go-fc83a.appspot.com"
+    "project_number": "134550993134",
+    "project_id": "fast-go-flutter",
+    "storage_bucket": "fast-go-flutter.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:924994072715:android:5235b0e416843020f8e48e",
+        "mobilesdk_app_id": "1:134550993134:android:d5b9878f77f57e69239bff",
         "android_client_info": {
           "package_name": "com.optic.fast_go.fast_go"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "924994072715-ibmqvss7aeaqqohmf4ka9dkk22of4b50.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.optic.fast_go.fast_go",
-            "certificate_hash": "3c2fd27de7987d34294ce07372617e751837e616"
-          }
-        },
-        {
-          "client_id": "924994072715-t53r2np6vru3e5na6juluitgkt26c258.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAahRMkfaAwkhMIaJlrqOonGKBKim3Fpb0"
+          "current_key": "AIzaSyD-KumUpo3fPxdP6vMUBTF-82-giEms_9c"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "924994072715-t53r2np6vru3e5na6juluitgkt26c258.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
